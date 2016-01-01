@@ -16,7 +16,7 @@ namespace Sins.Airport.Detect
         private ClientHandle client = null;
         #endregion 
         #region 摄像机配置
-        private string cip = "192.168.214.23";
+        private string cip = "192.168.1.64";
         private int cport = 8000;
         private string cuser = "admin";
         private string cpassword = "shiyanshi236";
@@ -49,9 +49,12 @@ namespace Sins.Airport.Detect
         #region 初始化视频检测
         private void DetectInit()
         {
-            Detect.init(this.fileName, new Camera {  ip=this.cip, port=this.cport, userName=this.cuser, password=this.cpassword});
+            Detect.DetectInit(
+                new CameraInfo {ip=this.cip, port=this.cport, 
+                    userName=this.cuser, password=this.cpassword}, 
+                    this.fileName);
             Detect.setDetectCallback(new DetectCallBack(this.CallBack));
-            Detect.start();
+            Detect.DetectStart();
         }
         #endregion
         #region 获取配置
@@ -86,7 +89,8 @@ namespace Sins.Airport.Detect
         /// <param name="data"></param>
         private void CallBack(Data.Rect[] data)
         {
-            if (this.client != null) this.client.SendDetectData("tracker",this.dataType, data);
+            if (this.client != null) 
+                this.client.SendDetectData("tracker",this.dataType, data);
         }
         #endregion
 

@@ -13,7 +13,7 @@ namespace Sins.Airport.Detect
     public delegate void DetectCallBack(Rect[] objs);
 
     //摄像头数据
-    public struct Camera
+    public struct CameraInfo
     {
         public string ip; //摄像头IP地址
         public int port; //摄像头端口
@@ -32,7 +32,7 @@ namespace Sins.Airport.Detect
         * 成功返回值0，不成功则返回出错代码（<0）
         */
         [DllImport(@"Detect.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int init(string fileName, Camera cameras);
+        public static extern int DetectInit(CameraInfo cameras, string fileName);
 
         /*
         * @brief init
@@ -42,7 +42,7 @@ namespace Sins.Airport.Detect
         * 成功返回值0，不成功则返回出错代码（<0）
         */
         [DllImport(@"Detect.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int start();
+        public static extern int DetectStart();
 
 
         /*
