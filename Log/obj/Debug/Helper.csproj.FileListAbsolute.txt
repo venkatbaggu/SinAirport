@@ -1,0 +1,5 @@
+D:\Project\WinForm\SinsAirport\Log\bin\Debug\Sins.Helper.dll
+D:\Project\WinForm\SinsAirport\Log\bin\Debug\Sins.Helper.pdb
+D:\Project\WinForm\SinsAirport\Log\obj\Debug\Sins.Helper.dll
+D:\Project\WinForm\SinsAirport\Log\obj\Debug\Sins.Helper.pdb
+D:\Project\WinForm\SinsAirport\Log\obj\Debug\Helper.csprojResolveAssemblyReference.cache

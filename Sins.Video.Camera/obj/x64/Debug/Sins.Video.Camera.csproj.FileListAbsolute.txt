@@ -1,0 +1,8 @@
+D:\Project\WinForm\SinsAirport\Sins.Video.Camera\bin\x64\Debug\CameraSet.xml
+D:\Project\WinForm\SinsAirport\Sins.Video.Camera\bin\x64\Debug\Sins.Video.Camera.dll
+D:\Project\WinForm\SinsAirport\Sins.Video.Camera\bin\x64\Debug\Sins.Video.Camera.pdb
+D:\Project\WinForm\SinsAirport\Sins.Video.Camera\bin\x64\Debug\Sins.Helper.dll
+D:\Project\WinForm\SinsAirport\Sins.Video.Camera\bin\x64\Debug\Sins.Helper.pdb
+D:\Project\WinForm\SinsAirport\Sins.Video.Camera\obj\x64\Debug\Sins.Video.Camera.csprojResolveAssemblyReference.cache
+D:\Project\WinForm\SinsAirport\Sins.Video.Camera\obj\x64\Debug\Sins.Video.Camera.dll
+D:\Project\WinForm\SinsAirport\Sins.Video.Camera\obj\x64\Debug\Sins.Video.Camera.pdb
