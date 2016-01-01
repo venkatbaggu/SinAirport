@@ -1,0 +1,47 @@
+#ifndef DETECT_H
+#define DETECT_H
+
+#include "DataStructure.h"
+
+/*
+* @brief init
+*
+* 目标检测初始化
+* @param[in] param 算法参数
+* @param[in] camera 摄像头信息
+* @return int
+* 成功返回值0，不成功则返回出错代码（<0）
+*/
+int __declspec(dllexport) DetectInit(
+				const CameraInfo& camera, const string& param);
+
+/*
+* @brief setDetectCallback
+*
+* 设置回调函数
+* @param[in] ptr 回调函数
+* @return bool
+* 成功返回值true，不成功则返回false.
+*/
+bool __declspec(dllexport) setDetectCallback(DetectCallback ptr);
+
+/*
+* @brief setDetectCallback
+*
+* 设置回调函数
+* @param[in] void 
+* @return bool
+* 成功返回值true，不成功则返回false.
+*/
+bool __declspec(dllexport) DetectStart(void);
+
+/*
+* @brief DetectRelease
+*
+* 释放资源
+* @param[in] void
+* @return void
+*/
+void __declspec(dllexport) DetectRelease(void);
+
+#endif // DETECT_H
