@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helper", "Log\Helper.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sins.Video.Camera", "Sins.Video.Camera\Sins.Video.Camera.csproj", "{64E1303F-A223-487C-A87D-DA1E56CCBF93}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DetectDLL", "DetectDLL\DetectDLL.vcxproj", "{F6089676-41AE-40B5-9080-6AE52A92B44A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,20 @@ Global
 		{64E1303F-A223-487C-A87D-DA1E56CCBF93}.Release|Win32.ActiveCfg = Release|Any CPU
 		{64E1303F-A223-487C-A87D-DA1E56CCBF93}.Release|x64.ActiveCfg = Release|x64
 		{64E1303F-A223-487C-A87D-DA1E56CCBF93}.Release|x64.Build.0 = Release|x64
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Debug|ARM.ActiveCfg = Debug|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Debug|Win32.Build.0 = Debug|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Debug|x64.ActiveCfg = Debug|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Release|Any CPU.ActiveCfg = Release|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Release|ARM.ActiveCfg = Release|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Release|Win32.ActiveCfg = Release|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Release|Win32.Build.0 = Release|Win32
+		{F6089676-41AE-40B5-9080-6AE52A92B44A}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
