@@ -3,6 +3,8 @@
 
 #include "Singleton.h"
 #include "Global.h"
+#include <vector>
+using std::vector;
 
 /**
 * @class Conversion

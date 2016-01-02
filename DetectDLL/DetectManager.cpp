@@ -19,7 +19,7 @@ DetectManager::DetectManager(void) :
 * @param[in] rects  区域列表
 * @return void
 */
-void DetectManager::setRect(const vector<Rect>& rects)
+void DetectManager::setRect(const vector<cv::Rect>& rects)
 {
 	if (0 == rects.size())
 	{
@@ -27,7 +27,7 @@ void DetectManager::setRect(const vector<Rect>& rects)
 		return;
 	}
 
-	Rect rect = rects.front();
+	cv::Rect rect = rects.front();
 
 	for (const auto& r : rects)
 	{
@@ -49,7 +49,7 @@ void DetectManager::setRect(const vector<Rect>& rects)
 * @param[in] cur 当前帧图像（灰度图）
 * @return vector<cv::Rect>  检测结果（最小外接矩形）
 */
-void DetectManager::update(Mat mat)
+void DetectManager::update(cv::Mat mat)
 {
 	if (true == mat.empty() || false == m_pTargetSubtractor) {
 		return ;
@@ -72,7 +72,7 @@ void DetectManager::update(Mat mat)
 	m_contourRects = move(contoursToRects(m_contours));
 
 	//call DetetCallback
-	(*gCallback)(m_contourRects);
+	send();
 
 	m_contours.clear();
 	m_contourRects.clear();
@@ -88,10 +88,10 @@ void DetectManager::update(Mat mat)
 * @param[in] contours 当前检测结果（点组成的轮廓）
 * @return vector<cv::Rect>  检测结果（最小外接矩形）
 */
-vector<Rect> DetectManager::contoursToRects(
-	const vector<vector<Point>>& contours)
+vector<cv::Rect> DetectManager::contoursToRects(
+	const vector<vector<cv::Point>>& contours)
 {
-	vector<Rect> contourRects;
+	vector<cv::Rect> contourRects;
 	contourRects.reserve(contours.size());
 	const auto endIter = contours.cend();
 	for (auto iter = contours.cbegin();
@@ -102,4 +102,37 @@ vector<Rect> DetectManager::contoursToRects(
 	}
 
 	return contourRects;
+}
+
+/**
+* @brief DetectManager::send
+*
+* 通过回调函数将数据发出
+* @param[in] void 
+* @return bool
+* 成功发出则返回true,否则返回false.
+*/
+bool DetectManager::send(void) {
+	if (m_contourRects.empty())
+		return false;
+
+	const int len = m_contourRects.size();
+	CRect* data = new CRect[len];
+
+	if (nullptr == data)
+		return false;
+
+	for (int idx = 0; len > idx; ++idx) {
+		data[idx].X = m_contourRects[idx].x;
+		data[idx].Y = m_contourRects[idx].y;
+		data[idx].Width = m_contourRects[idx].width;
+		data[idx].Height = m_contourRects[idx].height;
+	}
+
+	//(*gCallback)(data, len);
+	(*gCallback)(data);
+
+	delete[] data;
+
+	return true;
 }

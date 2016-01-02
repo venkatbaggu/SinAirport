@@ -8,3 +8,6 @@ D:\Project\WinForm\SinsAirport\CheckAlarm\bin\Debug\Sins.Client.dll
 D:\Project\WinForm\SinsAirport\CheckAlarm\bin\Debug\Sins.Client.xml
 D:\Project\WinForm\SinsAirport\CheckAlarm\obj\Debug\Sins.Airport.Detect.exe
 D:\Project\WinForm\SinsAirport\CheckAlarm\obj\Debug\Sins.Airport.Detect.pdb
+E:\SinAirport\Detect\bin\Debug\Sins.Airport.Detect.exe.config
+E:\SinAirport\Detect\obj\Debug\Sins.Airport.Detect.exe
+E:\SinAirport\Detect\obj\Debug\Sins.Airport.Detect.pdb

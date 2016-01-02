@@ -8,3 +8,14 @@ D:\Project\WinForm\SinsAirport\CheckAlarm\obj\x64\Debug\Sins.Airport.Detect.Prop
 D:\Project\WinForm\SinsAirport\CheckAlarm\obj\x64\Debug\Detect.csproj.GenerateResource.Cache
 D:\Project\WinForm\SinsAirport\CheckAlarm\obj\x64\Debug\Sins.Airport.Detect.exe
 D:\Project\WinForm\SinsAirport\CheckAlarm\obj\x64\Debug\Sins.Airport.Detect.pdb
+E:\SinAirport\Detect\bin\x64\Debug\Sins.Airport.Detect.exe.config
+E:\SinAirport\Detect\obj\x64\Debug\Sins.Airport.Detect.exe
+E:\SinAirport\Detect\obj\x64\Debug\Sins.Airport.Detect.pdb
+E:\SinAirport\Detect\bin\x64\Debug\Sins.Airport.Detect.exe
+E:\SinAirport\Detect\bin\x64\Debug\Sins.Airport.Detect.pdb
+E:\SinAirport\Detect\bin\x64\Debug\Sins.Client.dll
+E:\SinAirport\Detect\bin\x64\Debug\Sins.Client.xml
+E:\SinAirport\Detect\obj\x64\Debug\Sins.Airport.Detect.MainForm.resources
+E:\SinAirport\Detect\obj\x64\Debug\Sins.Airport.Detect.Properties.Resources.resources
+E:\SinAirport\Detect\obj\x64\Debug\Detect.csproj.GenerateResource.Cache
+E:\SinAirport\Detect\obj\x64\Debug\Detect.csprojResolveAssemblyReference.cache

@@ -1,17 +1,18 @@
 #ifndef DATA_STRUCTURE_H
 #define DATA_STRUCTURE_H
 
-#include <ctime>
-#include <vector>
 #include <string>
-using std::tm;
-using std::vector;
 using std::string;
 
-#include <opencv.hpp>
-using cv::Mat;
-using cv::Rect; 
-using cv::Point;
+typedef struct {
+	int x;
+	int y;
+}CPoint;
+
+typedef struct {
+	int X, Y;
+	int Width, Height;
+}CRect;
 
 //摄像头数据
 typedef struct {
@@ -25,23 +26,25 @@ typedef struct {
 typedef struct {
 	int ruleID; //违反规则ID
 	int ID; //违规目标ID
-	Point* trajectories; //违规目标轨迹
-	int lenth; //轨迹长度
-	Rect position; //违规目标当前位置
-	tm cur; //违规时间
-	Mat img; //预警图像
+	CPoint* trajectories; //违规目标轨迹
+	int len; //轨迹长度
+	CRect position; //违规目标当前位置
+	//tm cur; //违规时间
+	//Mat img; //预警图像
 }Result;
 
 //入侵检测规则
 typedef struct {
 	int ID; //规则ID
-	vector<cv::Point> vertexes; //入侵检测区域
+	CPoint* vertexes; //入侵检测区域
+	int len;
 }InvadeRule;
 
 //停机检测规则
 typedef struct {
 	int ID; //规则ID
-	vector<cv::Point> vertexes; //停机检测区域
+	CPoint* vertexes; //停机检测区域
+	int len;
 }HaltRule;
 
 //错误轨迹规则
@@ -49,8 +52,12 @@ typedef struct {
 	int ID; //规则ID
 	bool isValid; //角度是否有效	
 	int angle; //角度
-	vector<cv::Point> entryVertexes; //入口区域
-	vector<cv::Point> exitVertexes; //出口区域
+
+	CPoint* entryVertexes; //入口区域
+	int entryLen;
+
+	CPoint* exitVertexes; //出口区域
+	int exitLen;
 }WrongTrajectoryRule;
 
 //轨迹冲突规则
@@ -58,16 +65,22 @@ typedef struct {
 	int ID; //规则ID
 	bool isValid; //角度是否有效
 	int targetAngle; //目标运动角度
-	vector<int> detectAngles; //检测角度
-	vector<cv::Point> targetVertexes; //目标区域
-	vector<cv::Point> detectVertexes; //检测区域
+
+	int* detectAngles; //检测角度
+	int angleLen;
+
+	CPoint* targetVertexes; //目标区域
+	int targetLen;
+
+	CPoint detectVertexes; //检测区域
+	int detectLen;
 }ConflictTrajectoryRule;
 
 //检测回调函数
-typedef void(__stdcall* DetectCallback) (const vector<Rect>& objs);
+typedef void(__stdcall* DetectCallback) (CRect* objs);
 
 //跟踪回调函数
-typedef void(__stdcall* TrackCallback) (vector<Result> warnigns);
+typedef void(__stdcall* TrackCallback) (Result* warning, int len);
 
 //目标ID
 typedef long long int ID;

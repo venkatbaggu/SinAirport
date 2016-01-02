@@ -11,6 +11,9 @@ namespace Sins.Airport.Detect
     
     //回调函数
     public delegate void DetectCallBack(Rect[] objs);
+   
+    //public delegate void DetectCallBack(
+    //[MarshalAs(UnmanagedType.LPArray)] Rect[] objs, int length);
 
     //摄像头数据
     public struct CameraInfo
@@ -31,7 +34,9 @@ namespace Sins.Airport.Detect
         * @return int 
         * 成功返回值0，不成功则返回出错代码（<0）
         */
-        [DllImport(@"Detect.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"DetectDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+
+        //[DllImport(@"DetectDLL.dll", EntryPoint = "DetectInit")]
         public static extern int DetectInit(CameraInfo cameras, string fileName);
 
         /*
@@ -41,7 +46,7 @@ namespace Sins.Airport.Detect
         * @return int 
         * 成功返回值0，不成功则返回出错代码（<0）
         */
-        [DllImport(@"Detect.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"DetectDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int DetectStart();
 
 
@@ -54,7 +59,7 @@ namespace Sins.Airport.Detect
         * 成功返回值0，不成功则返回出错代码（<0）
         */
 
-        [DllImport(@"Detect.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"DetectDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setDetectCallback(DetectCallBack callback);
     }
 
