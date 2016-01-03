@@ -1,4 +1,0 @@
-D:\Project\WinForm\SinsAirport\Log\bin\x64\Debug\Sins.Helper.dll
-D:\Project\WinForm\SinsAirport\Log\bin\x64\Debug\Sins.Helper.pdb
-D:\Project\WinForm\SinsAirport\Log\obj\x64\Debug\Sins.Helper.dll
-D:\Project\WinForm\SinsAirport\Log\obj\x64\Debug\Sins.Helper.pdb

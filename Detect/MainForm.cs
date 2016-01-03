@@ -41,9 +41,9 @@ namespace Sins.Airport.Detect
             this.client = new ClientHandle(user);//创建通信客户端
             this.client.OnDisconnencted += (ok) => { this.runInfo.BeginInvoke((MethodInvoker)(() => { this.runInfo.AppendText("系统连接断开。\r\n"); })); };
             this.client.OnEndLogin += (r, m) => { this.runInfo.BeginInvoke((MethodInvoker)(() => { this.runInfo.AppendText(r ? "系统已经登录。\r\n" : "系统登录失败。\r\n"); })); };
-            client.Login();
+            //client.Login();
 
-            //this.DetectInit();//初始化检测客户端
+            this.DetectInit();//初始化检测客户端
         }
          #endregion
         #region 初始化视频检测

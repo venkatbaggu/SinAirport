@@ -1,3 +1,0 @@
-D:\Project\WinForm\SinsAirport\CheckAlarm\obj\Debug\CheckAlarm.csprojResolveAssemblyReference.cache
-D:\Project\WinForm\SinsAirport\CheckAlarm\obj\Debug\CheckAlarm.Properties.Resources.resources
-D:\Project\WinForm\SinsAirport\CheckAlarm\obj\Debug\CheckAlarm.csproj.GenerateResource.Cache
