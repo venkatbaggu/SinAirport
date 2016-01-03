@@ -3,7 +3,6 @@
 
 #include <future>
 #include <boost/thread.hpp>
-//#include <boost/circular_buffer.hpp>
 
 #include <core/cuda.hpp>
 #include <cudawarping.hpp>
@@ -27,7 +26,7 @@ class DetectManager : public Singleton<DetectManager>
 	DetectManager(void);
 
 public:
-	void update(Mat mat);
+	void update(cv::Mat mat);
 
 	void setRect(const vector<cv::Rect>& rects);
 
@@ -38,13 +37,15 @@ private:
 	vector<cv::Rect> contoursToRects(
 					const vector<vector<cv::Point>>& contours);
 
+	bool send(void);
+
 private:
 	cv::cuda::GpuMat m_cur;
 
 	boost::mutex m_runMutex;
 	unique_ptr<TargetSubtractor> m_pTargetSubtractor;
 	vector<vector<cv::Point> > m_contours;
-	vector<Rect> m_contourRects;
+	vector<cv::Rect> m_contourRects;
 };
 
 #endif // DETECT_MANAGER_H

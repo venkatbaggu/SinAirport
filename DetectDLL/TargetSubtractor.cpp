@@ -5,7 +5,7 @@
 *
 * ¹¹Ôìº¯Êý
 */
-TargetSubtractor::TargetSubtractor(const Rect& r) :
+TargetSubtractor::TargetSubtractor(const cv::Rect& r) :
 	rect(r)
 {
 	pBackgroundSubtractor = 
@@ -14,15 +14,15 @@ TargetSubtractor::TargetSubtractor(const Rect& r) :
 
 	pDilateFilter1 =
 		cv::cuda::createMorphologyFilter(
-			cv::MORPH_DILATE, CV_8UC1, Mat(), Point(-1, -1), 2);
+		cv::MORPH_DILATE, CV_8UC1, cv::Mat(), cv::Point(-1, -1), 2);
 
 	pDilateFilter2 =
 		cv::cuda::createMorphologyFilter(
-			cv::MORPH_DILATE, CV_8UC1, Mat(), Point(-1, -1), 1);
+		cv::MORPH_DILATE, CV_8UC1, cv::Mat(), cv::Point(-1, -1), 1);
 
 	pErodeFilter =
 		cv::cuda::createMorphologyFilter(
-			cv::MORPH_ERODE, CV_8UC1, Mat(), Point(-1, -1), 3);
+		cv::MORPH_ERODE, CV_8UC1, cv::Mat(), cv::Point(-1, -1), 3);
 }
 
 /**
@@ -40,7 +40,7 @@ void TargetSubtractor::getContours(GpuMat& mask,
 	pErodeFilter->apply(mask, mask);
 	pDilateFilter1->apply(mask, mask);
 
-	Mat tmp;
+	cv::Mat tmp;
 	mask.download(tmp);
 
 	contours.clear();

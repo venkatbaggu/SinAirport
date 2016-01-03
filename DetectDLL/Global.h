@@ -2,6 +2,7 @@
 #define DETECT_CONF_H
 
 #include "DataStructure.h"
+#include <opencv.hpp>
 
 /**< 回调函数 */
 extern DetectCallback gCallback;
@@ -34,7 +35,7 @@ extern unsigned int gContourAreaThreshold;
 extern unsigned int gExternedPixels;
 
 /**< 前景颜色值 */
-extern const uchar gForegroundColorValue;
+extern const unsigned char gForegroundColorValue;
 
 /**< 边界像素宽度 */
 extern const unsigned int gEdgePixel;

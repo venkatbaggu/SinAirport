@@ -20,7 +20,7 @@ using cv::cuda::Filter;
 class TargetSubtractor
 {
 public:
-	TargetSubtractor(const Rect& r);
+	TargetSubtractor(const cv::Rect& r);
 
 	void update(GpuMat& frame, GpuMat& mask);
 
@@ -31,7 +31,7 @@ private:
 	/**< 混合高斯背景建模 */
 	Ptr<BackgroundSubtractor> pBackgroundSubtractor;	
 	/**< 监控区域 */
-	Rect rect;										
+	cv::Rect rect;										
 	double learningRate;
 
 	Ptr<Filter> pDilateFilter1, pDilateFilter2, pErodeFilter;

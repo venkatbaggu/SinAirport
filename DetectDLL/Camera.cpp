@@ -149,7 +149,7 @@ void CALLBACK dataCallBack(
 	DetectManager::instance()->data.lock();
 
 	std::async(boost::bind(&DetectManager::update, DetectManager::instance(),
-		Mat(pFrame->nHeight, pFrame->nWidth, CV_8UC1, pBuf)));
+		cv::Mat(pFrame->nHeight, pFrame->nWidth, CV_8UC1, pBuf)));
 
 	//std::cout << "call update" << std::endl;
 

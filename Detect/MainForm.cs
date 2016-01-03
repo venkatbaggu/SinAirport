@@ -24,7 +24,7 @@ namespace Sins.Airport.Detect
         #region 检测配置
         private string fileName = "left.xml";
         #endregion 
-
+        
        
         #region 构造
         public MainForm()
