@@ -7,7 +7,7 @@
 #include "CameraManager.h"
 #include "ContourFilterManager.h"
 
-int DetectInit(const CameraInfo& camera, const string& param) {
+int DetectInit(CameraInfo camera, char* param) {
 
 	int num_devices = cv::cuda::getCudaEnabledDeviceCount();
 
@@ -31,8 +31,8 @@ int DetectInit(const CameraInfo& camera, const string& param) {
 	vector<cv::Rect> rects(1, gWholeRect);
 	DetectManager::instance()->setRect(rects);
 
-	CameraManager::instance()->add(camera.ip.c_str(), camera.port, 
-		camera.userName.c_str(), camera.password.c_str());
+	CameraManager::instance()->add(camera.ip, camera.port, 
+		camera.userName, camera.password);
 
 	if (false == CameraManager::instance()->login()) {
 		std::cerr << "Camera Login error." << std::endl;

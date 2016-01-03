@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
 namespace Sins.Airport.Detect
 {
@@ -22,7 +27,7 @@ namespace Sins.Airport.Detect
         private string cpassword = "shiyanshi236";
         #endregion 
         #region 检测配置
-        private string fileName = "left.xml";
+        private string fileName = "mid.xml";
         #endregion 
         
        
@@ -49,10 +54,17 @@ namespace Sins.Airport.Detect
         #region 初始化视频检测
         private void DetectInit()
         {
-            Detect.DetectInit(
+            int err = Detect.DetectInit(
                 new CameraInfo {ip=this.cip, port=this.cport, 
-                    userName=this.cuser, password=this.cpassword}, 
+                    userName=this.cuser, password=this.cpassword},
                     this.fileName);
+
+            if (0 != err)
+            {
+                MessageBox.Show(
+                    string.Format("Init Err, Code: {0}", err));
+            }
+
             Detect.setDetectCallback(new DetectCallBack(this.CallBack));
             Detect.DetectStart();
         }
@@ -87,8 +99,13 @@ namespace Sins.Airport.Detect
         /// 检测回调函数
         /// </summary>
         /// <param name="data"></param>
-        private void CallBack(Data.Rect[] data)
+        private void CallBack(
+            [MarshalAs(UnmanagedType.LPArray, 
+                SizeParamIndex=1)]Data.int[] a, int len)
         {
+            for (int i = 0; i < len; ++i) { 
+                MessageBox.Show(string.Format("{0}", a[i].X));
+            }
             if (this.client != null) 
                 this.client.SendDetectData("tracker",this.dataType, data);
         }

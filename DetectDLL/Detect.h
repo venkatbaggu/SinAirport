@@ -12,8 +12,8 @@
 * @return int
 * 成功返回值0，不成功则返回出错代码（<0）
 */
-int __declspec(dllexport) DetectInit(
-				const CameraInfo& camera, const string& param);
+extern "C" int __declspec(dllexport) 
+			DetectInit(CameraInfo camera, char* param);
 
 /*
 * @brief setDetectCallback
@@ -23,7 +23,8 @@ int __declspec(dllexport) DetectInit(
 * @return bool
 * 成功返回值true，不成功则返回false.
 */
-bool __declspec(dllexport) setDetectCallback(DetectCallback ptr);
+extern "C" bool __declspec(dllexport) 
+			setDetectCallback(DetectCallback ptr);
 
 /*
 * @brief setDetectCallback
@@ -33,7 +34,7 @@ bool __declspec(dllexport) setDetectCallback(DetectCallback ptr);
 * @return bool
 * 成功返回值true，不成功则返回false.
 */
-bool __declspec(dllexport) DetectStart(void);
+extern "C" bool __declspec(dllexport) DetectStart(void);
 
 /*
 * @brief DetectRelease
@@ -42,6 +43,6 @@ bool __declspec(dllexport) DetectStart(void);
 * @param[in] void
 * @return void
 */
-void __declspec(dllexport) DetectRelease(void);
+extern "C" void __declspec(dllexport) DetectRelease(void);
 
 #endif // DETECT_H

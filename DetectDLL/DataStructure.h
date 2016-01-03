@@ -16,10 +16,10 @@ typedef struct {
 
 //摄像头数据
 typedef struct {
-	string ip; //摄像头IP地址
+	char* ip; //摄像头IP地址
 	int port; //摄像头端口
-	string userName;  //摄像头用户名
-	string password;  //摄像头密码
+	char* userName;  //摄像头用户名
+	char* password;  //摄像头密码
 }CameraInfo;
 
 //预警结果
@@ -77,7 +77,7 @@ typedef struct {
 }ConflictTrajectoryRule;
 
 //检测回调函数
-typedef void(__stdcall* DetectCallback) (CRect* objs);
+typedef void(__stdcall* DetectCallback) (CRect* data, int len);
 
 //跟踪回调函数
 typedef void(__stdcall* TrackCallback) (Result* warning, int len);
