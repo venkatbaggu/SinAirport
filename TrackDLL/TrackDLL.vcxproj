@@ -61,7 +61,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opencv_core300d.lib;opencv_highgui300d.lib;opencv_video300d.lib;opencv_imgproc300d.lib;opencv_cudaarithm300d.lib;opencv_cudawarping300d.lib;HCNetSDK.lib;PlayCtrl.lib;HCCore.lib;GdiPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core300d.lib;opencv_highgui300d.lib;opencv_video300d.lib;opencv_imgcodecs300d.lib;opencv_imgproc300d.lib;opencv_cudaarithm300d.lib;opencv_cudawarping300d.lib;HCNetSDK.lib;PlayCtrl.lib;HCCore.lib;GdiPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -80,10 +80,59 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opencv_core300.lib;opencv_highgui300.lib;opencv_video300.lib;opencv_imgproc300.lib;opencv_cudaarithm300.lib;opencv_cudawarping300.lib;HCNetSDK.lib;PlayCtrl.lib;HCCore.lib;GdiPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opencv_core300.lib;opencv_highgui300.lib;opencv_video300.lib;opencv_imgcodecs300.lib;opencv_imgproc300.lib;opencv_cudaarithm300.lib;opencv_cudawarping300.lib;HCNetSDK.lib;PlayCtrl.lib;HCCore.lib;GdiPlus.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AffinityMatrix.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="ConflictTrajectory.h" />
+    <ClInclude Include="CU_utility.h" />
+    <ClInclude Include="Data.h" />
+    <ClInclude Include="DataStructure.h" />
+    <ClInclude Include="Global.h" />
+    <ClInclude Include="Halt.h" />
+    <ClInclude Include="IDManager.h" />
+    <ClInclude Include="Invade.h" />
+    <ClInclude Include="IWarning.h" />
+    <ClInclude Include="KalmanFilterTracker.h" />
+    <ClInclude Include="Mosaic.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Stitch.h" />
+    <ClInclude Include="TargetManager.h" />
+    <ClInclude Include="TemplateMatch.h" />
+    <ClInclude Include="Track.h" />
+    <ClInclude Include="TrackerManager.h" />
+    <ClInclude Include="TrackingManager.h" />
+    <ClInclude Include="Trajectory.h" />
+    <ClInclude Include="Utility.h" />
+    <ClInclude Include="WarningManager.h" />
+    <ClInclude Include="WrongTrajectory.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AffinityMatrix.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
+    <ClCompile Include="ConflictTrajectory.cpp" />
+    <ClCompile Include="CU_utility.cpp" />
+    <ClCompile Include="Data.cpp" />
+    <ClCompile Include="Global.cpp" />
+    <ClCompile Include="Halt.cpp" />
+    <ClCompile Include="IDManager.cpp" />
+    <ClCompile Include="Invade.cpp" />
+    <ClCompile Include="KalmanFilterTracker.cpp" />
+    <ClCompile Include="Mosaic.cpp" />
+    <ClCompile Include="Stitch.cpp" />
+    <ClCompile Include="TargetManager.cpp" />
+    <ClCompile Include="TemplateMatch.cpp" />
+    <ClCompile Include="Track.cpp" />
+    <ClCompile Include="TrackerManager.cpp" />
+    <ClCompile Include="TrackingManager.cpp" />
+    <ClCompile Include="Trajectory.cpp" />
+    <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="WarningManager.cpp" />
+    <ClCompile Include="WrongTrajectory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

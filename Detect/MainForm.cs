@@ -100,14 +100,14 @@ namespace Sins.Airport.Detect
         /// </summary>
         /// <param name="data"></param>
         private void CallBack(
-            [MarshalAs(UnmanagedType.LPArray, 
-                SizeParamIndex=1)]Data.int[] a, int len)
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)]int[] a, int len)
         {
             for (int i = 0; i < len; ++i) { 
-                MessageBox.Show(string.Format("{0}", a[i].X));
+                MessageBox.Show(string.Format("{0}", a[i]));
             }
-            if (this.client != null) 
-                this.client.SendDetectData("tracker",this.dataType, data);
+            //if (this.client != null) 
+            //    this.client.SendDetectData(
+            //            "tracker",this.dataType, data);
         }
         #endregion
 

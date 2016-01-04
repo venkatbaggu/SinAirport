@@ -13,5 +13,174 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\Stitch">
+      <UniqueIdentifier>{bddf7334-341b-4ee9-b4de-5c2f52f37a73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Camera">
+      <UniqueIdentifier>{8bb36765-b6d7-483d-a56b-28dbde3eca6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Track">
+      <UniqueIdentifier>{6cadbe49-8ef1-4ef5-9f1f-101b3507370a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Warning">
+      <UniqueIdentifier>{af71633b-cacb-4bb4-8d9a-683bfff6fb0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Camera">
+      <UniqueIdentifier>{c90a601a-6c43-404c-ae2e-10efe0f23877}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Warning">
+      <UniqueIdentifier>{9102d596-5f3d-4c29-8089-4d42419f74b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Track">
+      <UniqueIdentifier>{aa2b0125-161f-424a-8b98-68fde6b1f676}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Stitch">
+      <UniqueIdentifier>{12b02c40-4f98-4042-8be0-bf824c25a642}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DataStructure.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>头文件\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>头文件\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>头文件\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="AffinityMatrix.h">
+      <Filter>头文件\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="IDManager.h">
+      <Filter>头文件\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="KalmanFilterTracker.h">
+      <Filter>头文件\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetManager.h">
+      <Filter>头文件\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateMatch.h">
+      <Filter>头文件\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="TrackerManager.h">
+      <Filter>头文件\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="TrackingManager.h">
+      <Filter>头文件\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="Trajectory.h">
+      <Filter>头文件\Track</Filter>
+    </ClInclude>
+    <ClInclude Include="ConflictTrajectory.h">
+      <Filter>头文件\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="WrongTrajectory.h">
+      <Filter>头文件\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="WarningManager.h">
+      <Filter>头文件\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="IWarning.h">
+      <Filter>头文件\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="Invade.h">
+      <Filter>头文件\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="Halt.h">
+      <Filter>头文件\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="CU_utility.h">
+      <Filter>头文件\Stitch</Filter>
+    </ClInclude>
+    <ClInclude Include="Mosaic.h">
+      <Filter>头文件\Stitch</Filter>
+    </ClInclude>
+    <ClInclude Include="Stitch.h">
+      <Filter>头文件\Stitch</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>头文件\Stitch</Filter>
+    </ClInclude>
+    <ClInclude Include="Track.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Global.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>源文件\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Data.cpp">
+      <Filter>源文件\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>源文件\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ConflictTrajectory.cpp">
+      <Filter>源文件\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="Halt.cpp">
+      <Filter>源文件\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="Invade.cpp">
+      <Filter>源文件\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="WrongTrajectory.cpp">
+      <Filter>源文件\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="WarningManager.cpp">
+      <Filter>源文件\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="AffinityMatrix.cpp">
+      <Filter>源文件\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="KalmanFilterTracker.cpp">
+      <Filter>源文件\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="IDManager.cpp">
+      <Filter>源文件\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetManager.cpp">
+      <Filter>源文件\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateMatch.cpp">
+      <Filter>源文件\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="TrackerManager.cpp">
+      <Filter>源文件\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="TrackingManager.cpp">
+      <Filter>源文件\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="Trajectory.cpp">
+      <Filter>源文件\Track</Filter>
+    </ClCompile>
+    <ClCompile Include="CU_utility.cpp">
+      <Filter>源文件\Stitch</Filter>
+    </ClCompile>
+    <ClCompile Include="Mosaic.cpp">
+      <Filter>源文件\Stitch</Filter>
+    </ClCompile>
+    <ClCompile Include="Stitch.cpp">
+      <Filter>源文件\Stitch</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>源文件\Stitch</Filter>
+    </ClCompile>
+    <ClCompile Include="Track.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
