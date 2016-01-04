@@ -57,15 +57,15 @@ namespace Sins.Airport.Mat
         * 成功返回值0，不成功则返回出错代码（<0）
         */
 
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int init(IntPtr Handle);
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int TrackInit(IntPtr Handle);
         /*
         * @brief setCallback
         *
         * 设置回调函数
         * @return  成功返回值0，不成功则返回出错代码（<0）
         */
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int setCallback(TrackResultCallBack callback);
 
 
@@ -75,7 +75,7 @@ namespace Sins.Airport.Mat
        * 开始运行拼接
        * @return void
        */
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void startMat();
 
 
@@ -89,7 +89,7 @@ namespace Sins.Airport.Mat
         * detections[2]:右摄像头检测数据
         * @return void
         */
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void run(Rect[][] detections);
 
         /**
@@ -100,7 +100,7 @@ namespace Sins.Airport.Mat
         * @return bool
         * 更新成功返回true，不成功返回false。
         */
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool updateInvadeRule(HaltRule[] rules);
 
         /**
@@ -111,7 +111,7 @@ namespace Sins.Airport.Mat
         * @return bool
         * 更新成功返回true，不成功返回false。
         */
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool updateHaltRule(HaltRule[] rules);
 
         /**
@@ -133,7 +133,7 @@ namespace Sins.Airport.Mat
         * @return bool
         * 更新成功返回true，不成功返回false。
         */
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool updateConflictTrajectoryRule(ConflictTrajectoryRule[] rules);
     }
 }

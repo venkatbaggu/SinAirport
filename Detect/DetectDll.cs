@@ -8,13 +8,21 @@ using System.Runtime.InteropServices;
 namespace Sins.Airport.Detect
 {
     using Sins.Client.Service;
+
+    [StructLayout(LayoutKind.Sequential)]
+    //[MarshalAs(UnmanagedType.ByValArray)]
+    public unsafe struct CRect
+    {
+        public int X;
+        public int Y;
+        public int Width;
+        public int Heigth;
+    }
     
     //回调函数
-    //public delegate void DetectCallBack(Rect[] objs);
-    public delegate void 
-    DetectCallBack([MarshalAs(UnmanagedType.LPArray,
-                SizeParamIndex = 1)]int[] a, int len);
-    //public delegate void DetectCallBack(int* data, int length);
+    public unsafe delegate void DetectCallBack(CRect* data, int len);
+  //public delegate void DetectCallBack([MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)]int[] a, int len);
+  //public delegate void DetectCallBack(int* data, int length);
 
     //摄像头数据
     public struct CameraInfo

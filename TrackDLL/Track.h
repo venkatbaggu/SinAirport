@@ -11,8 +11,8 @@
 * @return int
 * 成功返回值0，不成功则返回出错代码（<0）
 */
-int __declspec(dllexport) TrackInit(void* pDC, 
-						const vector<CameraInfo>& cameras);
+extern "C" int __declspec(dllexport) 
+	TrackInit(void* pDC, const vector<CameraInfo>& cameras);
 
 /*
 * @brief setTrackCallback
@@ -22,7 +22,8 @@ int __declspec(dllexport) TrackInit(void* pDC,
 * @return int
 * 成功返回值0，不成功则返回出错代码（<0）
 */
-int __declspec(dllexport) setTrackCallback(TrackCallback ptr);
+extern "C" int __declspec(dllexport) 
+			setTrackCallback(TrackCallback ptr);
 
 /*
 * @brief TrackRun
@@ -34,7 +35,8 @@ int __declspec(dllexport) setTrackCallback(TrackCallback ptr);
 * detections[2]:右摄像头检测数据
 * @return void
 */
-void __declspec(dllexport) TrackRun(vector<vector<cv::Rect>> objs);
+extern "C" void __declspec(dllexport) 
+		TrackRun(vector<vector<cv::Rect>> objs);
 
 /*
 * @brief TrackStart
@@ -44,7 +46,7 @@ void __declspec(dllexport) TrackRun(vector<vector<cv::Rect>> objs);
 * @return bool
 * 启动成功返回true，不成功返回false。
 */
-bool __declspec(dllexport) TrackStart(void);
+extern "C" bool __declspec(dllexport) TrackStart(void);
 
 /**
 * @brief updateInvadeRule
@@ -54,7 +56,8 @@ bool __declspec(dllexport) TrackStart(void);
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-bool __declspec(dllexport) updateInvadeRule(vector<HaltRule> rules);
+extern "C" bool __declspec(dllexport) 
+		updateInvadeRule(vector<HaltRule> rules);
 
 /**
 * @brief updateHaltRule
@@ -64,7 +67,8 @@ bool __declspec(dllexport) updateInvadeRule(vector<HaltRule> rules);
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-bool __declspec(dllexport) updateHaltRule(vector<HaltRule> rules);
+extern "C" bool __declspec(dllexport)
+		updateHaltRule(vector<HaltRule> rules);
 
 /**
 * @brief updateWrongTrajectoryRule
@@ -74,8 +78,9 @@ bool __declspec(dllexport) updateHaltRule(vector<HaltRule> rules);
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-bool __declspec(dllexport) updateWrongTrajectoryRule(
-	vector<WrongTrajectoryRule> rules);
+extern "C" bool __declspec(dllexport) 
+		updateWrongTrajectoryRule(
+				vector<WrongTrajectoryRule> rules);
 
 /**
 * @brief updateConflictTrajectoryRule
@@ -85,10 +90,11 @@ bool __declspec(dllexport) updateWrongTrajectoryRule(
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-bool __declspec(dllexport) updateConflictTrajectoryRule(
-	vector<ConflictTrajectoryRule> rules);
+extern "C" bool __declspec(dllexport) 
+		updateConflictTrajectoryRule(
+				vector<ConflictTrajectoryRule> rules);
 
-void __declspec(dllexport) clearRules(void);
+extern "C" void __declspec(dllexport) clearRules(void);
 
 /**
 * @brief TrackRelease
@@ -97,6 +103,6 @@ void __declspec(dllexport) clearRules(void);
 * @param[in] void
 * @return void
 */
-void __declspec(dllexport) TrackRelease(void);
+extern "C" void __declspec(dllexport) TrackRelease(void);
 
 #endif // TRACK_H

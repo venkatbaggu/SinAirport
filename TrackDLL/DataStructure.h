@@ -1,17 +1,15 @@
 #ifndef DATA_STRUCTURE_H
 #define DATA_STRUCTURE_H
 
-#include <ctime>
-#include <vector>
-#include <string>
-using std::tm;
-using std::vector;
-using std::string;
+typedef struct {
+	int x;
+	int y;
+}CPoint;
 
-#include <opencv.hpp>
-using cv::Mat;
-using cv::Rect; 
-using cv::Point;
+typedef struct {
+	int X, Y;
+	int Width, Height;
+}CRect;
 
 //摄像头数据
 typedef struct {
@@ -63,11 +61,8 @@ typedef struct {
 	vector<Point> detectVertexes; //检测区域
 }ConflictTrajectoryRule;
 
-//检测回调函数
-typedef void(__stdcall* DetectCallback) (const vector<Rect>& objs);
-
 //跟踪回调函数
-typedef void(__stdcall* TrackCallback) (vector<Result> warnings);
+typedef void(__stdcall* TrackCallback) (Result* warning, int len);
 
 //目标ID
 typedef long long int ID;

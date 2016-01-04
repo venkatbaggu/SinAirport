@@ -52,7 +52,7 @@ namespace Sins.Airport.Detect
         }
          #endregion
         #region 初始化视频检测
-        private void DetectInit()
+        private unsafe void DetectInit()
         {
             int err = Detect.DetectInit(
                 new CameraInfo {ip=this.cip, port=this.cport, 
@@ -99,15 +99,18 @@ namespace Sins.Airport.Detect
         /// 检测回调函数
         /// </summary>
         /// <param name="data"></param>
-        private void CallBack(
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)]int[] a, int len)
+        /* private void CallBack(
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)]int[] a, int len)*/
+        private unsafe void CallBack(CRect* data, int len)
         {
-            for (int i = 0; i < len; ++i) { 
-                MessageBox.Show(string.Format("{0}", a[i]));
+            for (int i = 0; i < len; ++i)
+            {
+                //MessageBox.Show(
+                //        string.Format("X:{0}  Y:{1}; W:{2} H:{3}.\r\n",
+                //        data[i].X, data[i].Y, data[i].Width, data[i].Heigth));
+                this.runInfo.AppendText(string.Format("X:{0}  Y:{1}; W:{2} H:{3}.\r\n",
+                        data[i].X, data[i].Y, data[i].Width, data[i].Heigth));
             }
-            //if (this.client != null) 
-            //    this.client.SendDetectData(
-            //            "tracker",this.dataType, data);
         }
         #endregion
 
