@@ -8,9 +8,9 @@ namespace Sins.SQL.MySql
     class  Helper
     {
         private string server = "127.0.0.1";
-        private string dbName = "airportdb";
-        private string userName = "root";
-        private string password = "shiyanshi236";
+        private string dbName = "airport";
+        private string userName = "sa";
+        private string password = "Jia123";
         /// <summary>
         /// 构造
         /// </summary>

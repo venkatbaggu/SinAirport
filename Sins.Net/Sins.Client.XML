@@ -4,6 +4,25 @@
         <name>Sins.Client</name>
     </assembly>
     <members>
+        <member name="T:Sins.Client.Binary.BinData">
+            <summary>
+            序列化对象
+            </summary>
+        </member>
+        <member name="M:Sins.Client.Binary.BinData.GetData``1(System.Byte[])">
+            <summary>
+            反序列化
+            </summary>
+            <param name="data">数据</param>
+            <returns></returns>
+        </member>
+        <member name="M:Sins.Client.Binary.BinData.GetBin``1(``0)">
+            <summary>
+            反序列化
+            </summary>
+            <param name="data">数据</param>
+            <returns></returns>
+        </member>
         <member name="T:Sins.Client.ReceievedData">
             <summary>
             接收到数据
@@ -29,32 +48,6 @@
             <param name="size">-1：开始创建文件，-2：获取数据，-3：停止接收，-4：停止发送，-5发送完成，大于等于 0：数据大小</param>
             <param name="name">数据包名</param>
             <param name="data">数据</param>
-        </member>
-        <member name="T:Sins.Client.RecvBroadDetectData">
-            <summary>
-            接收广播检测数据
-            </summary>
-            <param name="userName">用户名</param>
-            <param name="dataType">检测类型</param>
-            <param name="data">检测数据</param>
-        </member>
-        <!-- 对于成员“T:Sins.Client.RecvSendDetectData”忽略有格式错误的 XML 注释 -->
-        <member name="T:Sins.Client.RecvTrackData">
-            <summary>
-            广播跟踪数据
-            </summary>
-            <param name="userName">用户名</param>
-            <param name="dataType">数据类型</param>
-            <param name="data">检测数据</param>
-            <param name="nums"></param>
-        </member>
-        <member name="T:Sins.Client.RecvUpdateRule">
-            <summary>
-            更新规则
-            </summary>
-            <param name="userName">用户名</param>
-            <param name="dataType">数据类型</param>
-            <param name="data">规则数据</param>
         </member>
         <member name="T:Sins.Client.EndEvent">
             <summary>
@@ -130,24 +123,9 @@
             接收二进制流
             </summary>
         </member>
-        <member name="F:Sins.Client.ClientHandle.OnRecvBroadDetectData">
+        <member name="F:Sins.Client.ClientHandle.OnRecvBroadBin">
             <summary>
              接收到广播的监测数据
-            </summary>
-        </member>
-        <member name="F:Sins.Client.ClientHandle.OnRecvSendDetectData">
-            <summary>
-            接收到发送的检测数据
-            </summary>
-        </member>
-        <member name="F:Sins.Client.ClientHandle.OnRecvTrackData">
-            <summary>
-             接收到跟踪数据
-            </summary>
-        </member>
-        <member name="F:Sins.Client.ClientHandle.OnRecvUpdateRule">
-            <summary>
-             接收到更新规则
             </summary>
         </member>
         <member name="F:Sins.Client.ClientHandle.OnDisconnencted">
@@ -265,39 +243,7 @@
             <param name="data">数据</param>
              <returns>发送结果</returns>
         </member>
-        <member name="M:Sins.Client.ClientHandle.BroadcastDetectData(System.Int32,Sins.Client.Service.Rect[])">
-            <summary>
-            发送检测数据
-            </summary>
-            <param name="dataType">检测类型</param>
-            <param name="data">检测数据</param>
-            <returns>发送结果</returns>
-        </member>
-        <member name="M:Sins.Client.ClientHandle.SendDetectData(System.String,System.Int32,Sins.Client.Service.Rect[])">
-            <summary>
-            发送检测数据
-            </summary>
-            <param name="userName">用户名</param>
-            <param name="dataType">检测类型</param>
-            <param name="data">检测数据</param>
-        </member>
-        <member name="M:Sins.Client.ClientHandle.BroadcastTrackData(System.Int32,Sins.Client.Service.Result,System.Int32)">
-            <summary>
-            广播跟踪数据
-            </summary>
-            <param name="dataType">数据类型</param>
-            <param name="data">检测数据</param>
-            <param name="nums"></param>
-             <returns>发送结果</returns>
-        </member>
-        <member name="M:Sins.Client.ClientHandle.BroadcastUpdateRule(System.Int32,Sins.Client.Service.Rule)">
-            <summary>
-            更新规则
-            </summary>
-            <param name="dataType">数据类型</param>
-            <param name="data">规则数据</param>
-             <returns>发送结果</returns>
-        </member>
+        <!-- 对于成员“M:Sins.Client.ClientHandle.BroadcastBin(System.Int32,System.Int64,System.String,System.Byte[])”忽略有格式错误的 XML 注释 -->
         <member name="M:Sins.Client.ClientHandle.EndLogin(System.String[],System.Int32)">
             <summary>
             登录结束
@@ -359,38 +305,15 @@
             <param name="name">数据包名</param>
             <param name="data">数据</param>
         </member>
-        <member name="M:Sins.Client.ClientHandle.RecvBroadDetectData(System.String,System.Int32,Sins.Client.Service.Rect[])">
+        <member name="M:Sins.Client.ClientHandle.ReceieveBroadBin(System.String,System.Int32,System.Int64,System.String,System.Byte[])">
             <summary>
-            发送检测数据
-            </summary>
-            <param name="userName">用户名</param>
-            <param name="dataType">检测类型</param>
-            <param name="data">检测数据</param>
-        </member>
-        <member name="M:Sins.Client.ClientHandle.RecvSendDetectData(System.String,System.Int32,Sins.Client.Service.Rect[])">
-            <summary>
-            发送检测数据
-            </summary>
-            <param name="userName">用户名</param>
-            <param name="dataType">检测类型</param>
-            <param name="data">检测数据</param>
-        </member>
-        <member name="M:Sins.Client.ClientHandle.RecvTrackData(System.String,System.Int32,Sins.Client.Service.Result,System.Int32)">
-            <summary>
-            广播跟踪数据
+            发送数据流
             </summary>
             <param name="userName">用户名</param>
             <param name="dataType">数据类型</param>
-            <param name="data">检测数据</param>
-            <param name="nums"></param>
-        </member>
-        <member name="M:Sins.Client.ClientHandle.RecvUpdateRule(System.String,System.Int32,Sins.Client.Service.Rule)">
-            <summary>
-            更新规则
-            </summary>
-            <param name="userName">用户名</param>
-            <param name="dataType">数据类型</param>
-            <param name="data">规则数据</param>
+            <param name="size">-1：开始创建文件，-2：获取数据，-3：停止接收，-4：停止发送，-5发送完成，大于等于 0：数据大小</param>
+            <param name="name">数据包名</param>
+            <param name="data">数据</param>
         </member>
         <member name="M:Sins.Client.ClientHandle.GetBump">
             <summary>

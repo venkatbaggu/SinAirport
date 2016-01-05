@@ -12,9 +12,10 @@ using System.Configuration;
 namespace Sins.Airport.Mat
 {
     using Sins.Client;
-    using Data = Sins.Client.Service;
+    using Sins.Client.Binary;
     public partial class MainForm : Form
     {
+        const int DetecChannel = 3;//检测摄像机个数
         #region 字段属性
         /// <summary>
         /// 单点监视视频图像
@@ -48,6 +49,8 @@ namespace Sins.Airport.Mat
         /// 数据库
         /// </summary>
         private Sins.Data.MySql.SQLHelper mysql = new Sins.Data.MySql.SQLHelper();
+
+        private Action<int,int,byte[]> DetectAction = DoDetectData;
         #endregion
 
         #region 构造函数
@@ -146,8 +149,8 @@ namespace Sins.Airport.Mat
                 string port=ConfigurationSettings.AppSettings["port"];
                 string user=ConfigurationSettings.AppSettings["user"];
                 Client = new ClientHandle(user);
-                Client.OnRecvSendDetectData += this.RecvDetectData;
-                Client.OnRecvUpdateRule += this.RecvUpdateRule;
+              //  Client.OnRecvSendDetectData += this.RecvDetectData;
+              //  Client.OnRecvBroadBin += this.RecvUpdateRule;
                 Client.Login();
             }
             catch
@@ -161,41 +164,37 @@ namespace Sins.Airport.Mat
         /// 收到检测数据
         /// </summary>
         /// <param name="userName">用户名</param>
-        /// <param name="dataType">检测类型</param>
-        /// <param name="data">检测数据</param>
-        private void RecvDetectData(string userName, int dataType, Data.Rect[] data)
+        /// <param name="dataType">检测类型 1：检测数据 2：规则数据</param>
+        /// <param name="size">数据类型 dataType=1{1...n 检测端编号}  dataType=2{1:入侵检测规则2:停机检测规则3:错误轨迹规则4：轨迹冲突规则}</param>
+        /// <param name="note">说明</param>
+        /// <param name="data">数据流</param>
+        private void RecvDetectData(string userName, int dataType, long size, string note, byte[] data)
         {
-            if (userName != "detect" || dataType>3) return;// 不是检测发来的数据
-           Data.Rect[][] temp=new Data.Rect[3][];
-           temp[dataType - 1] = data;
-           TrackMat.run(temp);
+            if (!userName.Contains("detect")) return;
+            if (dataType == 1 && data != null) BeginInvoke(this.DetectAction,new object[]{dataType,size,data});
         }
-        #endregion
-        #region 收到跟踪数据的处理方法
         /// <summary>
-        /// 收到跟踪数据
+        /// 处理接收到的检测数据
         /// </summary>
-        /// <param name="userName">用户名</param>
-        /// <param name="dataType">数据类型</param>
-        /// <param name="data">检测数据</param>
-        /// <param name="nums"></param>
-        private void RecvTrackData(string userName, int dataType, Data.Result data, int nums)
-        { 
-
-        }
-        #endregion
-        #region 收到更新规则的处理方法
-        /// <summary>
-        /// 收到更新规则
-        /// </summary>
-        /// <param name="userName">用户名</param>
-        /// <param name="dataType">数据类型</param>
-        /// <param name="data">规则数据</param>
-        private void RecvUpdateRule(string userName, int dataType, Data.Rule data)
+        /// <param name="dataType"></param>
+        /// <param name="size"></param>
+        /// <param name="data"></param>
+        private static  void  DoDetectData(int dataType,int size,byte[] data)
         {
+            try
+            {
+                var temp = BinData.GetData<CRect[]>(data);
+                CRect[][] rundata = new CRect[DetecChannel][];
+                rundata[size - 1] = temp;
+                TrackMat.run(rundata);
+            }
+            catch
+            {
 
+            }
         }
         #endregion
+        
 
 
         #region 初始化拼接和跟踪
@@ -204,7 +203,7 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="results">回调结果ram>
         /// <param name="nums">数组长度ram>
-        private void InitTrackMat()
+        private unsafe void InitTrackMat()
         {
             TrackMat.init(this.MatVideo.Handle);
             TrackMat.setCallback(new TrackResultCallBack(this.TrackCallBackFuncult));
@@ -217,11 +216,12 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="results">回调结果ram>
         /// <param name="nums">数组长度ram>
-        private void TrackCallBackFuncult(Data.Result[] results, int nums)
+        private unsafe void TrackCallBackFuncult(CRect* results, int nums)
         {
-            foreach(Data.Result res in results)
+            for (int i = 0; i < nums;i++ )
             {
-               this.mysql.GetCommand("SaveTrackData",new string[]{"ID","ruleID","position","cur","trajectories" },new object[]{res.ID,res.position,res.ruleID,res.cur,res.trajectories},true).ExecuteNonQuery();
+                CRect rect = results[i];
+             //   this.mysql.GetCommand("SaveTrackData", new string[] { "ID", "ruleID", "position", "cur", "trajectories" }, new object[] { rect.ID, rect.position, rect.ruleID, rect.cur, rect.trajectories }, true).ExecuteNonQuery();
             }
         }
         #endregion

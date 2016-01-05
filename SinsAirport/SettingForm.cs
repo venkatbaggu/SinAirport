@@ -10,8 +10,10 @@ using System.Windows.Forms;
 
 namespace Sins.Airport.Mat
 {
+   
     public partial class SettingForm : Form
     {
+        
         /// <summary>
         /// 绘制何种图形 0：不绘制 1：矩形 2：多边形
         /// </summary>
@@ -34,6 +36,7 @@ namespace Sins.Airport.Mat
         public SettingForm()
         {
             InitializeComponent();
+            
         }
         /// <summary>
         ///  构造

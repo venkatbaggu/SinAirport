@@ -1,35 +1,30 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Configuration;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.InteropServices;
 
 namespace Sins.Airport.Detect
 {
     using Sins.Client;//通信客户端
-    using Data=Sins.Client.Service;//通信客户端数据
+    using Sins.Client.Binary;
     public partial class MainForm : Form
     {
+        private int DetectId = 1;//检测机器编号
         #region 通信服务器配置
-        private int dataType = 0;
         private string server = "";
         private int port = 0;
         private string user = "";
         private ClientHandle client = null;
         #endregion 
         #region 摄像机配置
-        private string cip = "192.168.1.64";
-        private int cport = 8000;
-        private string cuser = "admin";
-        private string cpassword = "shiyanshi236";
+        private string cip = "";
+        private int cport = 0;
+        private string cuser = "";
+        private string cpassword = "";
         #endregion 
         #region 检测配置
-        private string fileName = "mid.xml";
+        private string fileName = "";
         #endregion 
-        
+
        
         #region 构造
         public MainForm()
@@ -46,27 +41,17 @@ namespace Sins.Airport.Detect
             this.client = new ClientHandle(user);//创建通信客户端
             this.client.OnDisconnencted += (ok) => { this.runInfo.BeginInvoke((MethodInvoker)(() => { this.runInfo.AppendText("系统连接断开。\r\n"); })); };
             this.client.OnEndLogin += (r, m) => { this.runInfo.BeginInvoke((MethodInvoker)(() => { this.runInfo.AppendText(r ? "系统已经登录。\r\n" : "系统登录失败。\r\n"); })); };
-            //client.Login();
+            client.Login();
 
-            this.DetectInit();//初始化检测客户端
+            //this.DetectInit();//初始化检测客户端
         }
          #endregion
         #region 初始化视频检测
         private unsafe void DetectInit()
         {
-            int err = Detect.DetectInit(
-                new CameraInfo {ip=this.cip, port=this.cport, 
-                    userName=this.cuser, password=this.cpassword},
-                    this.fileName);
-
-            if (0 != err)
-            {
-                MessageBox.Show(
-                    string.Format("Init Err, Code: {0}", err));
-            }
-
+            Detect.init(this.fileName, new Camera {  ip=this.cip, port=this.cport, userName=this.cuser, password=this.cpassword});
             Detect.setDetectCallback(new DetectCallBack(this.CallBack));
-            Detect.DetectStart();
+            Detect.start();
         }
         #endregion
         #region 获取配置
@@ -75,16 +60,16 @@ namespace Sins.Airport.Detect
             bool ok = false;
             try
             {
-                this.dataType = int.Parse(ConfigurationSettings.AppSettings["index"]);
+                this.DetectId = int.Parse(ConfigurationSettings.AppSettings["index"]);
                 this.server = ConfigurationSettings.AppSettings["server"];
                 this.port = int.Parse(ConfigurationSettings.AppSettings["port"]);
-                this.user = string.Format("{0}_{1}", ConfigurationSettings.AppSettings["user"], dataType);
+                this.user = string.Format("{0}_{1}", ConfigurationSettings.AppSettings["user"], DetectId);
                 this.fileName = ConfigurationSettings.AppSettings["file"];
                 this.cip = ConfigurationSettings.AppSettings["cip"];
                 this.cport = int.Parse(ConfigurationSettings.AppSettings["cport"]);
                 this.cuser = ConfigurationSettings.AppSettings["cuser"];
                 this.cpassword = ConfigurationSettings.AppSettings["cpassword"];
-                this.Flag.Text = string.Format("检测客户端{0}", this.dataType);
+                this.Flag.Text = string.Format("检测客户端{0}", this.DetectId);
                 ok = true;
             }
             catch
@@ -98,18 +83,19 @@ namespace Sins.Airport.Detect
         /// <summary>
         /// 检测回调函数
         /// </summary>
-        /// <param name="data"></param>
-        /* private void CallBack(
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)]int[] a, int len)*/
-        private unsafe void CallBack(CRect* data, int len)
+        /// <param name="data">CRect数组</param>
+        /// <param name="len">数组长度</param>
+        private unsafe void CallBack(CRect* data,int len)
         {
-            for (int i = 0; i < len; ++i)
+            try
             {
-                //MessageBox.Show(
-                //        string.Format("X:{0}  Y:{1}; W:{2} H:{3}.\r\n",
-                //        data[i].X, data[i].Y, data[i].Width, data[i].Heigth));
-                this.runInfo.AppendText(string.Format("X:{0}  Y:{1}; W:{2} H:{3}.\r\n",
-                        data[i].X, data[i].Y, data[i].Width, data[i].Heigth));
+                CRect[] temp = new CRect[len];
+                for (int i = 0; i < len; i++) { CRect rect = data[i]; temp[i] = rect; }
+                if (this.client != null) this.client.BroadcastBin(1, this.DetectId, "D", BinData.GetBin<CRect[]>(temp));
+            }
+            catch
+            {
+
             }
         }
         #endregion
