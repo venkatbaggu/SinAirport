@@ -119,7 +119,6 @@ bool DetectManager::send(void) {
 	const int len = m_contourRects.size();
 	CRect* data = new CRect[len];
 
-	//int* data = new int[len];
 	if (nullptr == data)
 		return false;
 
@@ -128,13 +127,11 @@ bool DetectManager::send(void) {
 		data[idx].Y = m_contourRects[idx].y;
 		data[idx].Width = m_contourRects[idx].width;
 		data[idx].Height = m_contourRects[idx].height;
-		//data[idx] = 10;
 	}
 
-	//(*gCallback)(data, len);
 	(*gCallback)(data, len);
 
-	delete[] data;
+	//delete[] data;
 
 	return true;
 }

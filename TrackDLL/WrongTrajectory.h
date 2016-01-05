@@ -17,25 +17,25 @@ class WrongTrajectory : public IWarning
 {
 public:
 	WrongTrajectory(const RuleID ri,
-		const vector<Point>& entryVertexes,
-		const vector<Point>& exitVertexes,
+		const vector<cv::Point>& entryVertexes,
+		const vector<cv::Point>& exitVertexes,
 		const bool iv,
 		const int a);
-	virtual const Rect boundingRect() const;
+	virtual const cv::Rect boundingRect() const;
 	virtual list<ID> detect();
-	virtual Rect getRect();
+	virtual cv::Rect getRect();
 
 private:
-	bool isInEntryRegion(const Rect& r);
-	bool isInExitRegion(const Rect& r);
+	bool isInEntryRegion(const cv::Rect& r);
+	bool isInExitRegion(const cv::Rect& r);
 	bool checkAngle(const Trajectory& trajectory);
 
 private:
-	Rect entryRect;			/**< 入口区域 */
-	Mat entryMask;			/**< 入口区域掩模 */
-	Rect exitRect;			/**< 出口区域 */
-	Mat exitMask;			/**< 出口区域掩模 */
-	Rect rect;				/**< 告警区 */
+	cv::Rect entryRect;			/**< 入口区域 */
+	cv::Mat entryMask;			/**< 入口区域掩模 */
+	cv::Rect exitRect;			/**< 出口区域 */
+	cv::Mat exitMask;			/**< 出口区域掩模 */
+	cv::Rect rect;				/**< 告警区 */
 	const bool isValid;			/**< 出口区域运动方向是否有效 */
 	const double moveAngle;		/**< 出口区域运动方向 */
 	set<ID> ids;				/**< 已经报警过的目标ID列表 */

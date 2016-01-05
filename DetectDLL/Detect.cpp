@@ -42,18 +42,23 @@ int DetectInit(CameraInfo camera, char* param) {
 	return 0;
 }
 
-bool setDetectCallback(DetectCallback ptr) {
+int setDetectCallback(DetectCallback ptr) {
 	if (nullptr == ptr) {
 		std::cerr << "ptr is null." << std::endl;
-		return false;
+		return -1;
 	} else {
 		gCallback = ptr;
-		return true;
+		return 0;
 	}
 }
 
-bool DetectStart(void) {
-	return CameraManager::instance()->start();
+int DetectStart(void) {
+	if (false == CameraManager::instance()->start()) {
+		std::cerr << "Start Camera error." << std::endl;
+		return -1;
+	} 
+		
+	return 0;	
 }
 
 void DetectRelease() {

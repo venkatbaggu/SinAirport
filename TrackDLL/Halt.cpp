@@ -9,7 +9,7 @@
 * @param[in] ri   告警规则ID
 * @param[in] vertexes  多边形区域顶点
 */
-Halt::Halt(const RuleID ri, const vector<Point>& vertexes) :
+Halt::Halt(const RuleID ri, const vector<cv::Point>& vertexes) :
 IWarning(RuleType::HaltType, ri)
 {
 	initMask(mask, vertexes);
@@ -24,7 +24,7 @@ IWarning(RuleType::HaltType, ri)
 * 实现了void IDetector::boundingRect() const
 * @return const cv::Rect
 */
-const Rect Halt::boundingRect() const
+const cv::Rect Halt::boundingRect() const
 {
 	return rect;
 }
@@ -71,9 +71,9 @@ list<ID> Halt::detect()
 * @param[in] r  目标所在区域
 * @return bool  如果目标在区域内则返回true，否则返回false
 */
-bool Halt::isInRegion(const Rect& r) const
+bool Halt::isInRegion(const cv::Rect& r) const
 {
-	const Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
+	const cv::Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
 	if (true == rect.contains(p))
 	{
 		return true;
@@ -97,7 +97,7 @@ bool Halt::detect(const Trajectory& trajectory) const
 	{
 		return false;
 	}
-	const Rect& curRect = fragments[size - 1];
+	const cv::Rect& curRect = fragments[size - 1];
 
 	for (size_t i = 0; i != gHaltFrameCount; ++i)
 	{
@@ -113,7 +113,7 @@ bool Halt::detect(const Trajectory& trajectory) const
 	return true;
 }
 
-Rect Halt::getRect()
+cv::Rect Halt::getRect()
 {
 	return rect;
 }

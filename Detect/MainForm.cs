@@ -41,17 +41,24 @@ namespace Sins.Airport.Detect
             this.client = new ClientHandle(user);//创建通信客户端
             this.client.OnDisconnencted += (ok) => { this.runInfo.BeginInvoke((MethodInvoker)(() => { this.runInfo.AppendText("系统连接断开。\r\n"); })); };
             this.client.OnEndLogin += (r, m) => { this.runInfo.BeginInvoke((MethodInvoker)(() => { this.runInfo.AppendText(r ? "系统已经登录。\r\n" : "系统登录失败。\r\n"); })); };
-            client.Login();
+            //client.Login();
 
-            //this.DetectInit();//初始化检测客户端
+            this.DetectInit();//初始化检测客户端
         }
          #endregion
         #region 初始化视频检测
         private unsafe void DetectInit()
         {
-            Detect.init(this.fileName, new Camera {  ip=this.cip, port=this.cport, userName=this.cuser, password=this.cpassword});
+            Detect.DetectInit(new CameraInfo {  
+                ip=this.cip, 
+                port=this.cport, 
+                userName=this.cuser, 
+                password=this.cpassword},
+                this.fileName);
+
             Detect.setDetectCallback(new DetectCallBack(this.CallBack));
-            Detect.start();
+
+            Detect.DetectStart();
         }
         #endregion
         #region 获取配置
@@ -90,8 +97,17 @@ namespace Sins.Airport.Detect
             try
             {
                 CRect[] temp = new CRect[len];
-                for (int i = 0; i < len; i++) { CRect rect = data[i]; temp[i] = rect; }
-                if (this.client != null) this.client.BroadcastBin(1, this.DetectId, "D", BinData.GetBin<CRect[]>(temp));
+                for (int i = 0; i < len; i++) 
+                { 
+                    CRect rect = data[i]; 
+                    temp[i] = rect; 
+                }
+
+                if (this.client != null) 
+                    this.client.BroadcastBin(1, 
+                        this.DetectId, "D", 
+                        BinData.GetBin<CRect[]>(temp)
+                        );
             }
             catch
             {

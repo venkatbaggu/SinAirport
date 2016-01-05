@@ -23,7 +23,7 @@ typedef struct {
 }CameraInfo;
 
 //检测回调函数
-typedef void(__stdcall* DetectCallback) (CRect* data, int len);
+typedef void(__stdcall* DetectCallback) (CRect* data, int size);
 
 //目标ID
 typedef long long int ID;

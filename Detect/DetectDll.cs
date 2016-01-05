@@ -39,14 +39,14 @@ namespace Sins.Airport.Detect
     /// </summary>
     /// <param name="objs">传回的CRect数组</param>
     /// <param name="len">数组长度</param>
-    public unsafe delegate void DetectCallBack(CRect* objs);
+    public unsafe delegate void DetectCallBack(CRect* objs, int size);
     #endregion
 
     #region  摄像头数据结构
     /// <summary>
     /// 摄像头数据结构
     /// </summary>
-    public struct Camera
+    public struct CameraInfo
     {
         /// <summary>
         ///  摄像头IP地址
@@ -79,22 +79,31 @@ namespace Sins.Airport.Detect
         /// <param name="fileName">param[in] params 算法参数</param>
         /// <param name="cameras">param[in] cameras 摄像头信息</param>
         /// <returns>成功返回值0，不成功则返回出错代码（<0）</returns>
-        [DllImport(@"Detect.dll", CallingConvention = CallingConvention.ThisCall, CharSet=CharSet.Unicode)]
-        public static extern int init(string fileName, Camera cameras);
+        [DllImport(@"DetectDLL.dll",
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern int DetectInit(CameraInfo cameras, string fileName);
 
         /// <summary>
         /// 开始检测
         /// </summary>
         /// <returns>成功返回值0，不成功则返回出错代码（<0）</returns>
-        [DllImport(@"Detect.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int start();
+        [DllImport(@"DetectDLL.dll", 
+            CallingConvention = CallingConvention.Cdecl)]
+        public static extern int DetectStart();
 
         /// <summary>
         ///  设置回调函数
         /// </summary>
         /// <param name="callback">成功返回值0，不成功则返回出错代码（<0）</param>
-        [DllImport(@"Detect.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setDetectCallback(DetectCallBack callback);
+        [DllImport(@"DetectDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int setDetectCallback(DetectCallBack callback);
+
+        /// <summary>
+        ///  释放DLL资源
+        /// </summary>
+        /// <param name="callback">无返回值</param>
+        [DllImport(@"DetectDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void DetectRelease(DetectCallBack callback);
     }
     #endregion
 }

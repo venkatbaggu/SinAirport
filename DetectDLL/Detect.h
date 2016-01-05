@@ -23,7 +23,7 @@ extern "C" int __declspec(dllexport)
 * @return bool
 * 成功返回值true，不成功则返回false.
 */
-extern "C" bool __declspec(dllexport) 
+extern "C" int __declspec(dllexport) 
 			setDetectCallback(DetectCallback ptr);
 
 /*
@@ -34,7 +34,7 @@ extern "C" bool __declspec(dllexport)
 * @return bool
 * 成功返回值true，不成功则返回false.
 */
-extern "C" bool __declspec(dllexport) DetectStart(void);
+extern "C" int __declspec(dllexport) DetectStart();
 
 /*
 * @brief DetectRelease
@@ -43,6 +43,6 @@ extern "C" bool __declspec(dllexport) DetectStart(void);
 * @param[in] void
 * @return void
 */
-extern "C" void __declspec(dllexport) DetectRelease(void);
+extern "C" void __declspec(dllexport) DetectRelease();
 
 #endif // DETECT_H

@@ -16,17 +16,17 @@ using std::set;
 class Invade : public IWarning
 {
 public:
-	Invade(const RuleID ri, const vector<Point>& vertexes);
-	virtual const Rect boundingRect() const;
+	Invade(const RuleID ri, const vector<cv::Point>& vertexes);
+	virtual const cv::Rect boundingRect() const;
 	virtual list<ID> detect();
-	virtual Rect getRect();
+	virtual cv::Rect getRect();
 
 private:
-	bool isInRegion(const Rect& r) const;
+	bool isInRegion(const cv::Rect& r) const;
 
 private:
-	Rect rect;				/**< 告警区 */
-	Mat mask;				/**< 告警区掩模 */
+	cv::Rect rect;				/**< 告警区 */
+	cv::Mat mask;				/**< 告警区掩模 */
 	set<ID> ids;			/**< 已经报警过的目标ID列表 */
 };
 

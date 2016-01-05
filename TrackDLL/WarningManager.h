@@ -4,11 +4,13 @@
 #include <map>
 #include <set>
 #include <list>
+#include <vector>
 #include <memory>
 using std::map;
 using std::set;
 using std::list;
 using std::unique_ptr;
+using std::vector;
 
 #include <boost/thread.hpp>
 
@@ -23,9 +25,9 @@ class WarningManager : public Singleton<WarningManager>
 
 public:
 	void reset(list<unique_ptr<IWarning>>& dts);
-	vector<Rect> boundingRects() const;
+	vector<cv::Rect> boundingRects() const;
 	void warning(map<RuleInfo, set<ID>>& warnigs);
-	vector<Rect> getRects();
+	vector<cv::Rect> getRects();
 	/*void add(list<unique_ptr<IWarning>>& dts);*/
 
 	void release();

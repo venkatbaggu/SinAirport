@@ -173,29 +173,29 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="Handle">显示窗口</param>
         /// <returns>成功返回值0，不成功则返回出错代码（<0）</returns>
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int init(IntPtr Handle);
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int TrackInit(IntPtr Handle, CameraInfo data);
 
         /// <summary>
         ///  设置回调委托
         /// </summary>
         /// <param name="callback">设置回调函数</param>
         /// <returns>eturn  成功返回值0，不成功则返回出错代码（<0）</returns>
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int setCallback(TrackResultCallBack callback);
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int setTrackCallback(TrackResultCallBack callback);
 
 
         /// <summary>
         ///  开始运行拼接
         /// </summary>
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void startMat();
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int TrackStart();
 
         /// <summary>
         ///  输入拼接数据
         /// </summary>
         /// <param name="detections">detections[0]:左摄像头检测数据 detections[1]:中摄像头检测数据  detections[2]:右摄像头检测数据 </param>
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void run(CRect[][] detections);
 
         /// <summary>
@@ -203,8 +203,8 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="rules">规则</param>
         /// <returns>更新成功返回true，不成功返回false。</returns>
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool updateInvadeRule(HaltRule[] rules);
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int updateInvadeRule(HaltRule[] rules);
 
 
         /// <summary>
@@ -212,16 +212,18 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="rules">规则</param>
         /// <returns>更新成功返回true，不成功返回false。</returns>
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool updateHaltRule(HaltRule[] rules);
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public unsafe static extern 
+            int updateHaltRule(HaltRule* rules, int size);
 
         /// <summary>
         ///  更新错误轨迹检测规则
         /// </summary>
         /// <param name="rules">规则</param>
         /// <returns>更新成功返回true，不成功返回false。</returns>
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool updateWrongTrajectoryRule(WrongTrajectoryRule[] rules);
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern 
+            int updateWrongTrajectoryRule(WrongTrajectoryRule* rules);
 
 
         /// <summary>
@@ -229,8 +231,8 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="rules">规则</param>
         /// <returns>更新成功返回true，不成功返回false。</returns>
-        [DllImport(@"TrackMat.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool updateConflictTrajectoryRule(ConflictTrajectoryRule[] rules);
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int updateConflictTrajectoryRule(ConflictTrajectoryRule[] rules);
     }
     #endregion
 }

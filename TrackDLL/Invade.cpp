@@ -9,7 +9,7 @@
 * @param[in] ri  告警规则ID
 * @param[in] vertexes  多边形区域顶点
 */
-Invade::Invade(const RuleID ri, const vector<Point>& vertexes) :
+Invade::Invade(const RuleID ri, const vector<cv::Point>& vertexes) :
 IWarning(RuleType::InvadeType, ri)
 {
 	initMask(mask, vertexes);
@@ -28,7 +28,7 @@ IWarning(RuleType::InvadeType, ri)
 * 实现了void Invade::boundingRect() const
 * @return const cv::Rect
 */
-const Rect Invade::boundingRect() const
+const cv::Rect Invade::boundingRect() const
 {
 	return rect;
 }
@@ -74,7 +74,7 @@ list<ID> Invade::detect()
 */
 bool Invade::isInRegion(const cv::Rect& r) const
 {
-	const Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
+	const cv::Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
 	if (true == rect.contains(p))
 	{
 		return true;
@@ -82,7 +82,7 @@ bool Invade::isInRegion(const cv::Rect& r) const
 	return false;
 }
 
-Rect Invade::getRect()
+cv::Rect Invade::getRect()
 {
 	return rect;
 }

@@ -2,6 +2,7 @@
 #define KALMAN_FILTER_H
 
 #include "DataStructure.h"
+#include <opencv.hpp>
 
 /**
 * @class KalmanFilterTracker
@@ -13,20 +14,20 @@ class KalmanFilterTracker
 {
 public:
 	KalmanFilterTracker(const int dynamParams = 8, const int measureParams = 4);
-	void init(const Rect& rect);
-	const Rect predict(void);
-	const Rect correct(const cv::Rect& rect);
+	void init(const cv::Rect& rect);
+	const cv::Rect predict(void);
+	const cv::Rect correct(const cv::Rect& rect);
 
 private:
 	cv::KalmanFilter kf;
 	int dynameCount;	/**< 状态向量维数 */
 	int measureCount;	/**< 观测向量维数 */
 
-	Mat measurement;	/**< 观测向量 */
-	Mat prediction;		/**< 预测状态 */
+	cv::Mat measurement;	/**< 观测向量 */
+	cv::Mat prediction;		/**< 预测状态 */
 
-	Rect predictedRect;
-	Rect correctedRect;
+	cv::Rect predictedRect;
+	cv::Rect correctedRect;
 };
 
 

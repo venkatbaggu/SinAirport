@@ -14,8 +14,8 @@
 * @param[in] das 检测区域角度
 */
 ConflictTrajectory::ConflictTrajectory(const RuleID ri
-	, const vector<Point>& targetVertexes
-	, const vector<Point>& detectVertexes
+	, const vector<cv::Point>& targetVertexes
+	, const vector<cv::Point>& detectVertexes
 	, const bool itv
 	, const int ta
 	, const vector<int>& das)
@@ -43,7 +43,7 @@ ConflictTrajectory::ConflictTrajectory(const RuleID ri
 * 实现了void IDetector::boundingRect() const
 * @return const cv::Rect
 */
-const Rect ConflictTrajectory::boundingRect() const
+const cv::Rect ConflictTrajectory::boundingRect() const
 {
 	return rect;
 }
@@ -55,9 +55,9 @@ const Rect ConflictTrajectory::boundingRect() const
 * @param[in] r  目标所在区域
 * @return bool  如果目标在TargetRegion区域则返回true，否则返回false
 */
-bool ConflictTrajectory::isInTargetRegion(const Rect& r) const
+bool ConflictTrajectory::isInTargetRegion(const cv::Rect& r) const
 {
-	const Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
+	const cv::Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
 	if (true == targetRect.contains(p))
 	{
 		return true;
@@ -72,9 +72,9 @@ bool ConflictTrajectory::isInTargetRegion(const Rect& r) const
 * @param[in] r  目标所在区域
 * @return bool  如果目标在DetectRegion区域则返回true，否则返回false
 */
-bool ConflictTrajectory::isInDetectRegion(const Rect& r) const
+bool ConflictTrajectory::isInDetectRegion(const cv::Rect& r) const
 {
-	const Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
+	const cv::Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
 	if (true == detectRect.contains(p))
 	{
 		return true;
@@ -241,7 +241,7 @@ std::set<ID> ConflictTrajectory::getIllegalTargets()
 	return illegalTargetSet;
 }
 
-Rect ConflictTrajectory::getRect()
+cv::Rect ConflictTrajectory::getRect()
 {
 	return rect;
 }

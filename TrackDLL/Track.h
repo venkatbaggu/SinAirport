@@ -12,7 +12,7 @@
 * 成功返回值0，不成功则返回出错代码（<0）
 */
 extern "C" int __declspec(dllexport) 
-	TrackInit(void* pDC, const vector<CameraInfo>& cameras);
+	TrackInit(void* pDC, CameraInfo* cameras, int size);
 
 /*
 * @brief setTrackCallback
@@ -36,7 +36,7 @@ extern "C" int __declspec(dllexport)
 * @return void
 */
 extern "C" void __declspec(dllexport) 
-		TrackRun(vector<vector<cv::Rect>> objs);
+		TrackRun(CRect** objs, int row, int col);
 
 /*
 * @brief TrackStart
@@ -46,7 +46,7 @@ extern "C" void __declspec(dllexport)
 * @return bool
 * 启动成功返回true，不成功返回false。
 */
-extern "C" bool __declspec(dllexport) TrackStart(void);
+extern "C" int __declspec(dllexport) TrackStart(void);
 
 /**
 * @brief updateInvadeRule
@@ -56,8 +56,8 @@ extern "C" bool __declspec(dllexport) TrackStart(void);
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-extern "C" bool __declspec(dllexport) 
-		updateInvadeRule(vector<HaltRule> rules);
+extern "C" int __declspec(dllexport) 
+		updateInvadeRule(InvadeRule* rules, int size);
 
 /**
 * @brief updateHaltRule
@@ -67,8 +67,8 @@ extern "C" bool __declspec(dllexport)
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-extern "C" bool __declspec(dllexport)
-		updateHaltRule(vector<HaltRule> rules);
+extern "C" int __declspec(dllexport)
+		updateHaltRule(HaltRule* rules, int size);
 
 /**
 * @brief updateWrongTrajectoryRule
@@ -78,9 +78,9 @@ extern "C" bool __declspec(dllexport)
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-extern "C" bool __declspec(dllexport) 
+extern "C" int __declspec(dllexport) 
 		updateWrongTrajectoryRule(
-				vector<WrongTrajectoryRule> rules);
+				WrongTrajectoryRule* rules, int size);
 
 /**
 * @brief updateConflictTrajectoryRule
@@ -90,9 +90,9 @@ extern "C" bool __declspec(dllexport)
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-extern "C" bool __declspec(dllexport) 
+extern "C" int __declspec(dllexport) 
 		updateConflictTrajectoryRule(
-				vector<ConflictTrajectoryRule> rules);
+				ConflictTrajectoryRule* rules, int size);
 
 extern "C" void __declspec(dllexport) clearRules(void);
 

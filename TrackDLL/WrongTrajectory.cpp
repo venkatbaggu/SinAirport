@@ -13,8 +13,8 @@
 * @param[in] a   目标运动角度
 */
 WrongTrajectory::WrongTrajectory(const RuleID ri,
-	const vector<Point>& entryVertexes, 
-	const vector<Point>& exitVertexes, 
+	const vector<cv::Point>& entryVertexes, 
+	const vector<cv::Point>& exitVertexes, 
 	const bool iv, const int a):
 	IWarning(RuleType::WrongTrajectoryType, ri), 
 	isValid(iv), moveAngle(a)
@@ -38,7 +38,7 @@ WrongTrajectory::WrongTrajectory(const RuleID ri,
 * 实现了void IDetector::boundingRect() const
 * @return const cv::Rect
 */
-const Rect WrongTrajectory::boundingRect() const
+const cv::Rect WrongTrajectory::boundingRect() const
 {
 	return rect;
 }
@@ -50,9 +50,9 @@ const Rect WrongTrajectory::boundingRect() const
 * @param[in] r  目标所在区域
 * @return bool  如果目标在入口区域内则返回true，否则返回false
 */
-bool WrongTrajectory::isInEntryRegion(const Rect& r)
+bool WrongTrajectory::isInEntryRegion(const cv::Rect& r)
 {
-	const Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
+	const cv::Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
 	if (true == entryRect.contains(p))
 	{
 		return true;
@@ -67,9 +67,9 @@ bool WrongTrajectory::isInEntryRegion(const Rect& r)
 * @param[in] r  目标所在区域
 * @return bool  如果目标在出口区域内则返回true，否则返回false
 */
-bool WrongTrajectory::isInExitRegion(const Rect& r)
+bool WrongTrajectory::isInExitRegion(const cv::Rect& r)
 {
-	const Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
+	const cv::Point p(r.x + r.width / 2 - 1, r.y + r.height - 1);
 	if (true == exitRect.contains(p))
 	{
 		return true;
@@ -169,7 +169,7 @@ list<ID> WrongTrajectory::detect()
 	return idList;
 }
 
-Rect WrongTrajectory::getRect()
+cv::Rect WrongTrajectory::getRect()
 {
 	return rect;
 }

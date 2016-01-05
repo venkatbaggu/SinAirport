@@ -2,8 +2,10 @@
 #define TRACKER_MANAGER_H
 
 #include <map>
+#include <vector>
 using std::map;
 using std::pair;
+using std::vector;
 
 #include "Global.h"
 #include "Singleton.h"

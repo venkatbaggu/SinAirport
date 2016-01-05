@@ -1,13 +1,15 @@
 #ifndef AFFINITY_MATRIX_H
 #define AFFINITY_MATRIX_H
 
+#include "Global.h"
+#include "Singleton.h"
+
 #include <map>
+#include <vector>
 #include <utility>
 using std::pair;
 using std::map;
-
-#include "Global.h"
-#include "Singleton.h"
+using std::vector;
 
 /**
 * @class AffinityMatrix

@@ -17,18 +17,18 @@ class ConflictTrajectory : public IWarning
 {
 public:
 	ConflictTrajectory(const RuleID ri,
-		const vector<Point>& targetVertexes,
-		const vector<Point>& detectVertexes,
+		const vector<cv::Point>& targetVertexes,
+		const vector<cv::Point>& detectVertexes,
 		const bool itv,
 		const int ta,
 		const vector<int>& das);
-	virtual const Rect boundingRect() const;
+	virtual const cv::Rect boundingRect() const;
 	virtual list<ID> detect();
-	virtual Rect getRect();
+	virtual cv::Rect getRect();
 
 private:
-	bool isInTargetRegion(const Rect& r) const;
-	bool isInDetectRegion(const Rect& r) const;
+	bool isInTargetRegion(const cv::Rect& r) const;
+	bool isInDetectRegion(const cv::Rect& r) const;
 
 	set<ID> getTargets();
 	set<ID> getIllegalTargets();
@@ -37,13 +37,13 @@ private:
 		, const int moveAngle);
 
 private:
-	Rect targetRect;					/**< 运动目标所在区域 */
-	Mat targetMask;						/**< 运动目标所在区域掩模 */
+	cv::Rect targetRect;					/**< 运动目标所在区域 */
+	cv::Mat targetMask;						/**< 运动目标所在区域掩模 */
 
-	Rect detectRect;					/**< 检测区域 */
-	Mat detectMask;						/**< 检测区域掩模 */
+	cv::Rect detectRect;					/**< 检测区域 */
+	cv::Mat detectMask;						/**< 检测区域掩模 */
 
-	Rect rect;							/**< 告警区 */
+	cv::Rect rect;							/**< 告警区 */
 	bool isTargetAngleValid;				/**< 目标运动角度是否有效 */
 	const int targetAngle;					/**< 目标运动角度 */
 

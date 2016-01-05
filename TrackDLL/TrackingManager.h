@@ -1,16 +1,20 @@
 #ifndef TRACKING_MANAGER_H
 #define TRACKING_MANAGER_H
 
+#include "DataStructure.h"
+#include "Singleton.h"
+
 #include <map>
 #include <set>
+#include <vector>
 using std::map;
 using std::pair;
 using std::set;
+using std::vector;
 
 #include <boost/thread.hpp>
 
-#include "DataStructure.h"
-#include "Singleton.h"
+#include <opencv.hpp>
 
 /**
 * @class TrackingManager
@@ -24,21 +28,21 @@ class TrackingManager : public Singleton<TrackingManager>
 	TrackingManager(void);
 
 public:
-	void update(vector<Rect>& objs);
+	void update(vector<cv::Rect>& objs);
 
-	void setRect(const vector<Rect>& rects);
+	void setRect(const vector<cv::Rect>& rects);
 
 private:
 	boost::mutex runMutex;
-	vector<Rect> contourRects;
-	vector<pair<ID, Rect>> predictedRects;
+	vector<cv::Rect> contourRects;
+	vector<pair<ID, cv::Rect>> predictedRects;
 	vector<ID> lostTargets;
-	vector<pair<ID, Rect> > matchedTargets;
-	vector<pair<ID, vector<Rect> > > splitTargets;
-	vector<pair<Rect, vector<ID> > > occludedTargets;
-	vector<Rect> newTargets;
-	map<ID, Rect> correctedRects;
-	Rect regionDetect;
+	vector<pair<ID, cv::Rect> > matchedTargets;
+	vector<pair<ID, vector<cv::Rect> > > splitTargets;
+	vector<pair<cv::Rect, vector<ID> > > occludedTargets;
+	vector<cv::Rect> newTargets;
+	map<ID, cv::Rect> correctedRects;
+	cv::Rect regionDetect;
 	unsigned int trajectoryID;
 	set<ID> ids;
 };

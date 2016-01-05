@@ -42,7 +42,7 @@ void WarningManager::release()
 * 获取所有规则的监控区域
 * @return vector<cv::Rect>  所有规则的监控区域
 */
-vector<Rect> WarningManager::boundingRects() const
+vector<cv::Rect> WarningManager::boundingRects() const
 {
 	vector<cv::Rect> rects;
 	const auto endIter = detectors.end();

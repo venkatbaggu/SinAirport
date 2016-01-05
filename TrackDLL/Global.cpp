@@ -47,16 +47,16 @@ int gROIWidth = 5000;
 int gROIHeight = 1080;
 
 /**< 显示区域矩形 */
-Rect gWholeRect;
+cv::Rect gWholeRect;
 
-Mat gLastFrame = Mat::zeros(5000, 5000, CV_8U);
+cv::Mat gLastFrame = cv::Mat::zeros(5000, 5000, CV_8U);
 
-Mat gCurFrame = Mat::zeros(5000, 5000, CV_8U);
+cv::Mat gCurFrame = cv::Mat::zeros(5000, 5000, CV_8U);
 
 ////////////////////////////////////////////////////////////////////////////
 /// 全局辅助函数
 /**< 读取算法参数 */
-bool readGlobal(const string& file) {
+bool readGlobal(const std::string& file) {
 
 	if (false == boost::filesystem::exists(file)) {
 		return false;
@@ -96,8 +96,8 @@ bool readGlobal(const string& file) {
 }
 
 /**< 辅助合并函数 */
-vector<cv::Rect> merge(const vector<cv::Rect>& base,
-	const vector<cv::Rect>& merged)
+std::vector<cv::Rect> merge(const std::vector<cv::Rect>& base,
+	const std::vector<cv::Rect>& merged)
 {
 	if (base.empty()) {
 		return merged;
@@ -106,7 +106,7 @@ vector<cv::Rect> merge(const vector<cv::Rect>& base,
 		return base;
 	}
 	else {
-		vector<cv::Rect> result(base);
+		std::vector<cv::Rect> result(base);
 
 		for (auto cur = merged.begin(); merged.end() != cur; ++cur) {
 			bool find = false;
@@ -128,9 +128,9 @@ vector<cv::Rect> merge(const vector<cv::Rect>& base,
 }
 
 /**< 检测目标合并 */
-vector<cv::Rect> mergeAll(const vector<vector<cv::Rect>>& cur)
+std::vector<cv::Rect> mergeAll(const std::vector<std::vector<cv::Rect>>& cur)
 {
-	vector<cv::Rect> result;
+	std::vector<cv::Rect> result;
 
 	if (cur.size() == 3) {
 		if (cur[1].empty()) {
@@ -163,10 +163,10 @@ double angle(const double x, const double y)
 }
 
 /**< 目标轮廓转矩形 */
-vector<Rect> contoursToRects(
-		const vector<vector<Point>>& contours)
+std::vector<cv::Rect> contoursToRects(
+	const std::vector<std::vector<cv::Point>>& contours)
 {
-	vector<Rect> contourRects;
+	std::vector<cv::Rect> contourRects;
 	contourRects.reserve(contours.size());
 	const auto endIter = contours.cend();
 	for (auto iter = contours.cbegin();
@@ -178,10 +178,10 @@ vector<Rect> contoursToRects(
 	return contourRects;
 }
 
-vector<Rect> contoursToRects(const Mat& mask)
+std::vector<cv::Rect> contoursToRects(const cv::Mat& mask)
 {
-	vector< vector<Point> > contours;
-	Mat tmp = mask.clone();
+	std::vector< std::vector<cv::Point> > contours;
+	cv::Mat tmp = mask.clone();
 
 	cv::findContours(tmp, contours, 
 		CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);
@@ -189,10 +189,10 @@ vector<Rect> contoursToRects(const Mat& mask)
 }
 
 /**< 初始化背景掩膜 */
-void initMask(Mat& mask, const vector<Point>& points)
+void initMask(cv::Mat& mask, const std::vector<cv::Point>& points)
 {
-	mask = Mat::zeros(gROIHeight, gROIWidth, CV_8U);
-	vector<vector<Point>> contours;
+	mask = cv::Mat::zeros(gROIHeight, gROIWidth, CV_8U);
+	std::vector<std::vector<cv::Point>> contours;
 	contours.push_back(points);
 	cv::drawContours(mask,
 		contours,

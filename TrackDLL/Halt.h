@@ -16,12 +16,12 @@ using std::set;
 class Halt : public IWarning
 {
 public:
-	Halt(const RuleID ri, const vector<Point>& vertexes);
-	virtual const Rect boundingRect() const;
+	Halt(const RuleID ri, const vector<cv::Point>& vertexes);
+	virtual const cv::Rect boundingRect() const;
 	virtual list<ID> detect();
-	virtual Rect getRect();
+	virtual cv::Rect getRect();
 private:
-	bool isInRegion(const Rect& r) const;
+	bool isInRegion(const cv::Rect& r) const;
 	bool detect(const Trajectory& trajectory) const;
 
 private:

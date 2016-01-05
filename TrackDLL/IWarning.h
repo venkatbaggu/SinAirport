@@ -6,6 +6,8 @@ using std::list;
 
 #include "DataStructure.h"
 
+#include <opencv.hpp>
+
 class IWarning
 {
 public:
@@ -40,7 +42,7 @@ public:
 	* 获取该规则所监控的区域外接矩形
 	* @return const cv::Rect  该规则所监控的区域外接矩形
 	*/
-	virtual const Rect boundingRect() const = 0;
+	virtual const cv::Rect boundingRect() const = 0;
 
 	/**
 	* @brief

@@ -36,10 +36,10 @@ TrackingManager::TrackingManager(void):
 * @param[in] objs  当前检测结果
 * @return map<ID, vector<cv::Rect>>  所有跟踪目标的ID及历史信息
 */
-void TrackingManager::update(vector<Rect>& objs)
+void TrackingManager::update(vector<cv::Rect>& objs)
 {
-	static const vector< pair<ID, vector<Rect> > > emptySplitTargets;
-	static const vector< pair<Rect, vector<ID> > > emptyOccludedTargets;
+	static const vector< pair<ID, vector<cv::Rect> > > emptySplitTargets;
+	static const vector< pair<cv::Rect, vector<ID> > > emptyOccludedTargets;
 
 	if (!runMutex.try_lock())
 	{
@@ -110,7 +110,7 @@ void TrackingManager::update(vector<Rect>& objs)
 * 设置监控区域
 * @param[in] rects  区域列表
 */
-void TrackingManager::setRect(const vector<Rect>& rects) {
+void TrackingManager::setRect(const vector<cv::Rect>& rects) {
 	if (0 == rects.size())
 	{
 		return;
@@ -123,7 +123,7 @@ void TrackingManager::setRect(const vector<Rect>& rects) {
 	for (; endIter != iter; iter++)
 		rect |= *iter;
 
-	rect -= Point(gExternedPixels, gExternedPixels);
+	rect -= cv::Point(gExternedPixels, gExternedPixels);
 	rect += cv::Size(2 * gExternedPixels, 2 * gExternedPixels);
 
 	rect &= gWholeRect;
