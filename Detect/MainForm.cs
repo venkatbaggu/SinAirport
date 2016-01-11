@@ -8,6 +8,7 @@ namespace Sins.Airport.Detect
     using Sins.Client.Binary;
     public partial class MainForm : Form
     {
+        Action<CRect[]> work = null;
         private int DetectId = 1;//检测机器编号
         #region 通信服务器配置
         private string server = "";
@@ -25,6 +26,7 @@ namespace Sins.Airport.Detect
         private string fileName = "";
         #endregion 
 
+        private static DetectCallBack callback;
        
         #region 构造
         public MainForm()
@@ -35,19 +37,32 @@ namespace Sins.Airport.Detect
         #region 窗体加载
         private void MainForm_Load(object sender, EventArgs e)
         {
+            this.work = this.send;
             this.Resize += (ss, ee) => { this.Size = new System.Drawing.Size(475, 400); };
+            //获取参数
+            if (!this.GetSettints()) 
+                return;
+            //创建通信客户端
+            this.client = new ClientHandle(user);
 
-            if (!this.GetSettints()) return;//获取参数
-            this.client = new ClientHandle(user);//创建通信客户端
-            this.client.OnDisconnencted += (ok) => { this.runInfo.BeginInvoke((MethodInvoker)(() => { this.runInfo.AppendText("系统连接断开。\r\n"); })); };
-            this.client.OnEndLogin += (r, m) => { this.runInfo.BeginInvoke((MethodInvoker)(() => { this.runInfo.AppendText(r ? "系统已经登录。\r\n" : "系统登录失败。\r\n"); })); };
-            //client.Login();
+            this.client.OnDisconnencted += (ok) => { 
+                this.runInfo.BeginInvoke((MethodInvoker)(() => { 
+                    this.runInfo.AppendText("系统连接断开。\r\n"); })); };
+
+            this.client.OnEndLogin += (r, m) => { 
+                this.runInfo.BeginInvoke((MethodInvoker)(() => { 
+                    this.runInfo.AppendText(r ? 
+                        "系统已经登录。\r\n" : "系统登录失败。\r\n"); })); };
+
+            client.Login();
+
+            callback = new DetectCallBack(this.CallBack);
 
             this.DetectInit();//初始化检测客户端
         }
          #endregion
         #region 初始化视频检测
-        private unsafe void DetectInit()
+        private void DetectInit()
         {
             Detect.DetectInit(new CameraInfo {  
                 ip=this.cip, 
@@ -56,7 +71,7 @@ namespace Sins.Airport.Detect
                 password=this.cpassword},
                 this.fileName);
 
-            Detect.setDetectCallback(new DetectCallBack(this.CallBack));
+            Detect.setDetectCallback(callback);
 
             Detect.DetectStart();
         }
@@ -86,31 +101,47 @@ namespace Sins.Airport.Detect
             return ok;
         }
         #endregion
-        #region 回调事件，向跟踪段发送跟踪检测数据
+        #region 检测回调事件
         /// <summary>
         /// 检测回调函数
         /// </summary>
         /// <param name="data">CRect数组</param>
         /// <param name="len">数组长度</param>
-        private unsafe void CallBack(CRect* data,int len)
-        {
-            try
-            {
-                CRect[] temp = new CRect[len];
-                for (int i = 0; i < len; i++) 
-                { 
-                    CRect rect = data[i]; 
-                    temp[i] = rect; 
-                }
+        private void CallBack(IntPtr data, int len) {
+            CRect[] temp = BinData.PtrToArray<CRect>(data, len);
+            work.BeginInvoke(temp, null, new Object[] { temp });
+        }
+        #endregion
 
-                if (this.client != null) 
-                    this.client.BroadcastBin(1, 
-                        this.DetectId, "D", 
-                        BinData.GetBin<CRect[]>(temp)
-                        );
-            }
-            catch
-            {
+        #region 发送检测数据到跟踪端
+        /// <summary>
+        /// 发送数据函数
+        /// </summary>
+        /// <param name="data">CRect数组</param>
+        private void send(CRect[] data)
+        {
+            try {
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    this.runInfo.Clear();
+                    int count = 1;
+                    this.runInfo.AppendText("回调获得的数组:\r\n");
+                    foreach (CRect rect in data)
+                    {
+                        this.runInfo.AppendText(
+                            string.Format("[{0}]：X:{1},Y:{2};Heigth:{3},Width:{4}.\r\n", 
+                            count++.ToString().PadLeft(2), 
+                            rect.X.ToString().PadLeft(2), 
+                            rect.Y.ToString().PadLeft(3), 
+                            rect.Height.ToString().PadLeft(3), 
+                            rect.Width.ToString().PadLeft(3)));
+                    }
+                  
+                    //发送数据 测试发送给自己(detect1)
+                    //this.client.SendBin("detect1", 1, 1, "D", 
+                    //    BinData.GetBin<CRect[]>(data));
+                }));
+            } catch {
 
             }
         }

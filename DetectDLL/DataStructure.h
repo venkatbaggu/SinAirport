@@ -11,7 +11,8 @@ typedef struct {
 
 typedef struct {
 	int X, Y;
-	int Width, Height;
+	int Width;
+	int Height;
 }CRect;
 
 //摄像头数据
@@ -23,7 +24,7 @@ typedef struct {
 }CameraInfo;
 
 //检测回调函数
-typedef void(__stdcall* DetectCallback) (CRect* data, int size);
+typedef void(_stdcall* DetectCallback) (CRect* data, int len);
 
 //目标ID
 typedef long long int ID;

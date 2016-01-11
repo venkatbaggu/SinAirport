@@ -12,7 +12,7 @@ namespace Sins.Airport.Detect
     /// 矩形结构体
     /// </summary>
     [Serializable]
-    public unsafe struct CRect
+    public struct CRect
     {
         /// <summary>
         /// X坐标
@@ -37,9 +37,9 @@ namespace Sins.Airport.Detect
     /// <summary>
     ///  回调函数
     /// </summary>
-    /// <param name="objs">传回的CRect数组</param>
+    /// <param name="data">传回的CRect数组</param>
     /// <param name="len">数组长度</param>
-    public unsafe delegate void DetectCallBack(CRect* objs, int size);
+    public delegate void DetectCallBack(IntPtr data, int len);
     #endregion
 
     #region  摄像头数据结构

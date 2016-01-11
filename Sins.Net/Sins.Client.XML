@@ -23,6 +23,15 @@
             <param name="data">数据</param>
             <returns></returns>
         </member>
+        <member name="M:Sins.Client.Binary.BinData.PtrToArray``1(System.IntPtr,System.Int32)">
+            <summary>
+            读取结构数组指针的数组对象
+            </summary>
+            <typeparam name="T">类型</typeparam>
+            <param name="ptr">指针</param>
+            <param name="len">数组长度</param>
+            <returns></returns>
+        </member>
         <member name="T:Sins.Client.ReceievedData">
             <summary>
             接收到数据

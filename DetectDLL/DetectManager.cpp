@@ -55,9 +55,9 @@ void DetectManager::update(cv::Mat mat)
 		return ;
 	}
 
-	if (false == m_runMutex.try_lock()) {
-		return ;
-	}
+	//if (false == m_runMutex.try_lock()) {
+	//	return ;
+	//}
 
 	m_cur.upload(mat);
 	cv::cuda::resize(m_cur, m_cur, cv::Size(m_cur.cols / gRatio, m_cur.rows / gRatio));
@@ -76,7 +76,7 @@ void DetectManager::update(cv::Mat mat)
 
 	m_contours.clear();
 	m_contourRects.clear();
-	m_runMutex.unlock();
+	//m_runMutex.unlock();
 
 	return ;
 }
@@ -116,7 +116,7 @@ bool DetectManager::send(void) {
 	if (m_contourRects.empty())
 		return false;
 
-	const int len = m_contourRects.size();
+	int len = m_contourRects.size();
 	CRect* data = new CRect[len];
 
 	if (nullptr == data)
@@ -129,9 +129,9 @@ bool DetectManager::send(void) {
 		data[idx].Height = m_contourRects[idx].height;
 	}
 
-	(*gCallback)(data, len);
+	gCallback(data, m_contourRects.size());
 
-	//delete[] data;
+	delete[] data;
 
 	return true;
 }
