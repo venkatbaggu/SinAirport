@@ -15,6 +15,7 @@ namespace Sins.Airport.Mat
     using Sins.Client.Binary;
     public partial class MainForm : Form
     {
+        private static TrackResultCallBack callback;
         const int DetecChannel = 3;//检测摄像机个数
         #region 字段属性
         /// <summary>
@@ -44,13 +45,14 @@ namespace Sins.Airport.Mat
         /// <summary>
         /// 通信服务的客户端
         /// </summary>
-        private ClientHandle Client;
+        private ClientHandle client;
         /// <summary>
         /// 数据库
         /// </summary>
         private Sins.Data.MySql.SQLHelper mysql = new Sins.Data.MySql.SQLHelper();
 
-        private Action<int,int,byte[]> DetectAction = DoDetectData;
+        //private Action<int,int,byte[]> DetectAction = DoDetectData;
+        private Action<CRect[]> DetectAction = DoDetectData;
         #endregion
 
         #region 构造函数
@@ -90,6 +92,8 @@ namespace Sins.Airport.Mat
            // this.LoadImage(this.MatVideo,"test.bmp");
             //初始化单点播放视频服务器
             // cameras=new Video.Camera.Cameras(this.pointVideos);
+            //连接通信服务器
+            this.ConnectServer();
             //初始化跟踪拼接系统
             //this.InitTrackMat();
         }
@@ -148,10 +152,10 @@ namespace Sins.Airport.Mat
                 string server=ConfigurationSettings.AppSettings["server"];
                 string port=ConfigurationSettings.AppSettings["port"];
                 string user=ConfigurationSettings.AppSettings["user"];
-                Client = new ClientHandle(user);
-              //  Client.OnRecvSendDetectData += this.RecvDetectData;
+                this.client = new ClientHandle(user);
+                this.client.OnReceieveBin += this.RecvDetectData;
               //  Client.OnRecvBroadBin += this.RecvUpdateRule;
-                Client.Login();
+                this.client.Login();
             }
             catch
             {
@@ -168,10 +172,16 @@ namespace Sins.Airport.Mat
         /// <param name="size">数据类型 dataType=1{1...n 检测端编号}  dataType=2{1:入侵检测规则2:停机检测规则3:错误轨迹规则4：轨迹冲突规则}</param>
         /// <param name="note">说明</param>
         /// <param name="data">数据流</param>
-        private void RecvDetectData(string userName, int dataType, long size, string note, byte[] data)
+        private void RecvDetectData(string user, int dataType, long size, string note, byte[] data)
         {
-            if (!userName.Contains("detect")) return;
-            if (dataType == 1 && data != null) BeginInvoke(this.DetectAction,new object[]{dataType,size,data});
+            if (!user.Contains("detect")) 
+                return;
+            if (dataType == 1 && data != null) 
+            {
+                CRect[] temp = BinData.GetData<CRect[]>(data);
+                DetectAction.BeginInvoke(
+                    temp, null, new Object[] { temp });
+            }
         }
         /// <summary>
         /// 处理接收到的检测数据
@@ -179,14 +189,14 @@ namespace Sins.Airport.Mat
         /// <param name="dataType"></param>
         /// <param name="size"></param>
         /// <param name="data"></param>
-        private static  void  DoDetectData(int dataType,int size,byte[] data)
+        private static  void  DoDetectData(CRect[] data)
         {
             try
             {
-                var temp = BinData.GetData<CRect[]>(data);
+                //var temp = BinData.GetData<CRect[]>(data);
                 CRect[][] rundata = new CRect[DetecChannel][];
-                rundata[size - 1] = temp;
-                TrackMat.run(rundata);
+                //rundata[size - 1] = temp;
+                TrackMat.TrackRun(rundata);
             }
             catch
             {
@@ -203,11 +213,29 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="results">回调结果ram>
         /// <param name="nums">数组长度ram>
-        private unsafe void InitTrackMat()
+        private void InitTrackMat()
         {
-            TrackMat.init(this.MatVideo.Handle);
-            TrackMat.setCallback(new TrackResultCallBack(this.TrackCallBackFuncult));
-            TrackMat.startMat();
+            CameraInfo[] cameras = new CameraInfo[3];
+
+            cameras[0].ip = "192.168.1.64";
+            cameras[0].port = 8000;
+            cameras[0].userName = "admin";
+            cameras[0].password = "shiyanshi236";
+
+            cameras[1].ip = "192.168.1.65";
+            cameras[1].port = 8000;
+            cameras[1].userName = "admin";
+            cameras[1].password = "shiyanshi236";
+
+            cameras[2].ip = "192.168.1.66";
+            cameras[2].port = 8000;
+            cameras[2].userName = "admin";
+            cameras[2].password = "shiyanshi236";
+
+            TrackMat.TrackInit(this.MatVideo.Handle, cameras, 3);
+            callback = new TrackResultCallBack(this.TrackCallBackFuncult);
+            TrackMat.setTrackCallback(callback);
+            TrackMat.TrackStart();
         }
         #endregion
         #region 跟踪回调 保存数据
@@ -216,11 +244,11 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="results">回调结果ram>
         /// <param name="nums">数组长度ram>
-        private unsafe void TrackCallBackFuncult(CRect* results, int nums)
+        private void TrackCallBackFuncult(IntPtr results, int nums)
         {
             for (int i = 0; i < nums;i++ )
             {
-                CRect rect = results[i];
+                //CRect rect = results[i];
              //   this.mysql.GetCommand("SaveTrackData", new string[] { "ID", "ruleID", "position", "cur", "trajectories" }, new object[] { rect.ID, rect.position, rect.ruleID, rect.cur, rect.trajectories }, true).ExecuteNonQuery();
             }
         }
@@ -229,10 +257,10 @@ namespace Sins.Airport.Mat
         #region 检查网络连接
         private void  StartCheckNet()
         {
-            if(this.Client!=null)
+            if(this.client!=null)
             {
                 Task task = new Task(() => {
-                    this.Client.BroadcastMsg(1, null);
+                    this.client.BroadcastMsg(1, null);
                 });
             }
         }

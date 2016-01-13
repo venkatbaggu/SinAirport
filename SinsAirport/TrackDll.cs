@@ -8,11 +8,38 @@ using System.Runtime.InteropServices;
 namespace Sins.Airport.Mat
 {
     using TData=Sins.Client.Service;
+
+    #region  摄像头信息
+    /// <summary>
+    /// 摄像头信息
+    /// </summary>
+    public struct CameraInfo
+    {
+        /// <summary>
+        ///  摄像头IP地址
+        /// </summary>
+        public string ip; 
+        /// <summary>
+        ///  摄像头端口
+        /// </summary>
+        public int port; 
+        /// <summary>
+        ///  摄像头用户名
+        /// </summary>
+        public string userName; 
+        /// <summary>
+        ///  摄像头密码
+        /// </summary>
+        public string password; 
+    }
+    #endregion
+
     #region  点数据结构
     /// <summary>
     /// 点数据结构
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct CPoint
     {
         /// <summary>
@@ -20,7 +47,7 @@ namespace Sins.Airport.Mat
         /// </summary>
         public int X; 
         /// <summary>
-        ///  坐标
+        ///  Y坐标
         /// </summary>
         public int Y; 
     }
@@ -31,24 +58,25 @@ namespace Sins.Airport.Mat
     /// 矩形结构体
     /// </summary>
     [Serializable]
-    public unsafe struct CRect
+    [StructLayout(LayoutKind.Sequential)]
+    public struct CRect
     {
         /// <summary>
         /// X坐标
         /// </summary>
-        public Int32 X;
+        public int X;
         /// <summary>
         ///   Y坐标
         /// </summary>
-        public Int32 Y;
+        public int Y;
         /// <summary>
         ///  矩形长
         /// </summary>
-        public Int32 Width;
+        public int Width;
         /// <summary>
         ///  矩形宽
         /// </summary>
-        public Int32 Height;
+        public int Height;
     }
     #endregion
 
@@ -57,6 +85,7 @@ namespace Sins.Airport.Mat
     /// 入侵检测规则结构
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct InvadeRule
     {
         /// <summary>
@@ -66,7 +95,11 @@ namespace Sins.Airport.Mat
         /// <summary>
         ///  入侵检测区域
         /// </summary>
-        public CPoint[] vertexes; 
+        public CPoint[] vertexes;
+        /// <summary>
+        ///  数组长度
+        /// </summary>
+        public int size;
     }
     #endregion
 
@@ -75,6 +108,7 @@ namespace Sins.Airport.Mat
     /// 停机检测规则
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct HaltRule
     {
         /// <summary>
@@ -84,7 +118,11 @@ namespace Sins.Airport.Mat
         /// <summary>
         ///  停机检测区域
         /// </summary>
-        public CPoint[] vertexes; 
+        public CPoint[] vertexes;
+        /// <summary>
+        ///  数组长度
+        /// </summary>
+        public int size;
     };
     #endregion
 
@@ -93,6 +131,7 @@ namespace Sins.Airport.Mat
     ///  错误轨迹规则
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct WrongTrajectoryRule
     {
         /// <summary>
@@ -110,11 +149,19 @@ namespace Sins.Airport.Mat
         /// <summary>
         ///  入口区域
         /// </summary>
-        public CPoint[] entryVertexes; 
+        public CPoint[] entryVertexes;
+        /// <summary>
+        ///  入口区域数组长度
+        /// </summary>
+        public int entrySize;
         /// <summary>
         /// 出口区域
         /// </summary>
-        public CPoint[] exitVertexes; 
+        public CPoint[] exitVertexes;
+        /// <summary>
+        /// 出口区域数组长度
+        /// </summary>
+        public int exitSize;
     }
     #endregion
 
@@ -123,6 +170,7 @@ namespace Sins.Airport.Mat
     /// 轨迹冲突规则
     /// </summary>
     [Serializable]
+    [StructLayout(LayoutKind.Sequential)]
     public struct ConflictTrajectoryRule
     {
         /// <summary>
@@ -140,15 +188,27 @@ namespace Sins.Airport.Mat
         /// <summary>
         /// 检测角度
         /// </summary>
-        public int[] detectAngles; 
+        public int[] detectAngles;
+        /// <summary>
+        /// 检测角度数组长度
+        /// </summary>
+        public int angleSize;
         /// <summary>
         /// 目标区域
         /// </summary>
-        public CPoint[] targetVertexes; 
+        public CPoint[] targetVertexes;
+        /// <summary>
+        /// 目标区域数组长度
+        /// </summary>
+        public int targetSize;
         /// <summary>
         /// 检测区域
         /// </summary>
-        public CPoint[] detectVertexes; 
+        public CPoint[] detectVertexes;
+        /// <summary>
+        /// 检测区域数组长度
+        /// </summary>
+        public int detectSize;
     }
     #endregion
 
@@ -156,9 +216,9 @@ namespace Sins.Airport.Mat
     /// <summary>
     /// 回调函数
     /// </summary>
-    /// <param name="results">返回结果</param>
-    /// <param name="nums">返回数组长度</param>
-    public unsafe delegate void TrackResultCallBack(CRect* results, int nums);
+    /// <param name="data">返回结果</param>
+    /// <param name="len">返回数组长度</param>
+    public delegate void TrackResultCallBack(IntPtr data, int len);
     #endregion
 
     #region 跟踪接口类
@@ -174,7 +234,8 @@ namespace Sins.Airport.Mat
         /// <param name="Handle">显示窗口</param>
         /// <returns>成功返回值0，不成功则返回出错代码（<0）</returns>
         [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int TrackInit(IntPtr Handle, CameraInfo data);
+        public static extern int TrackInit(IntPtr Handle, 
+            CameraInfo[] cameras, int size);
 
         /// <summary>
         ///  设置回调委托
@@ -182,7 +243,8 @@ namespace Sins.Airport.Mat
         /// <param name="callback">设置回调函数</param>
         /// <returns>eturn  成功返回值0，不成功则返回出错代码（<0）</returns>
         [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int setTrackCallback(TrackResultCallBack callback);
+        public static extern int setTrackCallback(
+            TrackResultCallBack callback);
 
 
         /// <summary>
@@ -196,7 +258,7 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="detections">detections[0]:左摄像头检测数据 detections[1]:中摄像头检测数据  detections[2]:右摄像头检测数据 </param>
         [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void run(CRect[][] detections);
+        public static extern void TrackRun(CRect[][] detections);
 
         /// <summary>
         ///  更新入侵检测规则
@@ -204,7 +266,7 @@ namespace Sins.Airport.Mat
         /// <param name="rules">规则</param>
         /// <returns>更新成功返回true，不成功返回false。</returns>
         [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int updateInvadeRule(HaltRule[] rules);
+        public static extern int updateInvadeRule(HaltRule[] rules, int size);
 
 
         /// <summary>
@@ -213,8 +275,18 @@ namespace Sins.Airport.Mat
         /// <param name="rules">规则</param>
         /// <returns>更新成功返回true，不成功返回false。</returns>
         [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
-        public unsafe static extern 
-            int updateHaltRule(HaltRule* rules, int size);
+        public static extern 
+            int updateHaltRule(HaltRule[] rules, int size);
+
+        /// <summary>
+        ///  更新错误轨迹检测规则
+        /// </summary>
+        /// <param name="rules">规则</param>
+        /// <returns>更新成功返回true，不成功返回false。</returns>
+        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern
+            int updateWrongTrajectoryRule(HaltRule rules, int size);
+
 
         /// <summary>
         ///  更新错误轨迹检测规则
@@ -223,16 +295,8 @@ namespace Sins.Airport.Mat
         /// <returns>更新成功返回true，不成功返回false。</returns>
         [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern 
-            int updateWrongTrajectoryRule(WrongTrajectoryRule* rules);
-
-
-        /// <summary>
-        ///  更新错误轨迹检测规则
-        /// </summary>
-        /// <param name="rules">规则</param>
-        /// <returns>更新成功返回true，不成功返回false。</returns>
-        [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int updateConflictTrajectoryRule(ConflictTrajectoryRule[] rules);
+            int updateConflictTrajectoryRule(
+            ConflictTrajectoryRule[] rules, int size);
     }
     #endregion
 }

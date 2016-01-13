@@ -55,9 +55,9 @@ void DetectManager::update(cv::Mat mat)
 		return ;
 	}
 
-	//if (false == m_runMutex.try_lock()) {
-	//	return ;
-	//}
+	if (false == m_runMutex.try_lock()) {
+		return ;
+	}
 
 	m_cur.upload(mat);
 	cv::cuda::resize(m_cur, m_cur, cv::Size(m_cur.cols / gRatio, m_cur.rows / gRatio));
@@ -76,7 +76,7 @@ void DetectManager::update(cv::Mat mat)
 
 	m_contours.clear();
 	m_contourRects.clear();
-	//m_runMutex.unlock();
+	m_runMutex.unlock();
 
 	return ;
 }

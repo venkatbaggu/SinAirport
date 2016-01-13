@@ -4,7 +4,8 @@
     <PublishUrlHistory>发布\</PublishUrlHistory>
   </PropertyGroup>
   <PropertyGroup>
-    <ReferencePath>E:\SinAirport\DetectDLL\x64\Debug\</ReferencePath>
+    <ReferencePath>
+    </ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <EnableUnmanagedDebugging>true</EnableUnmanagedDebugging>
