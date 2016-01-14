@@ -57,7 +57,7 @@ namespace Sins.Airport.Mat
         /// </summary>
         /// <param name="detections">detections[0]:左摄像头检测数据 detections[1]:中摄像头检测数据  detections[2]:右摄像头检测数据 </param>
         [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void TrackRun(CRect[][] detections);
+        public static extern void TrackRun(CRect[] detections, int size, int cur);
 
         /// <summary>
         ///  更新入侵检测规则
@@ -65,7 +65,8 @@ namespace Sins.Airport.Mat
         /// <param name="rules">规则</param>
         /// <returns>更新成功返回true，不成功返回false。</returns>
         [DllImport(@"TrackDLL.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int updateInvadeRule(HaltRule[] rules, int size);
+        //public static extern int updateInvadeRule(HaltRule[] rules, int size);
+        public static extern int updateInvadeRule(CPoint[] rules, int size);
 
 
         /// <summary>

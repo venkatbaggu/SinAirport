@@ -69,7 +69,8 @@ typedef struct {
 }ConflictTrajectoryRule;
 
 //跟踪回调函数
-typedef void(__stdcall* TrackCallback) (Result* warning, int len);
+//typedef void(__stdcall* TrackCallback) (Result* warning, int len);
+typedef void(__stdcall* TrackCallback) (CRect* warning, int len);
 
 //目标ID
 typedef long long int ID;

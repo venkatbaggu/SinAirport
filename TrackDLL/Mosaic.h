@@ -1,19 +1,15 @@
+#ifndef MOSAIC_H
+#define MOSAIC_H
 
-#if !defined CU_MOSAIC_H
-#define CU_MOSAIC_H
-
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-
-//#include "windows.h"
 #include "CU_utility.h"
-//#include "Utility.h"
 
-using cv::Mat;
-using cv::Size;
-using cv::Rect;
+#include <core/cuda.hpp>
 using cv::cuda::GpuMat;
+
+#include <string>
+#include <vector>
+using std::vector;
+using std::string;
 
 /** Image Mosaic */
 class __declspec(dllexport) CuMosaic {

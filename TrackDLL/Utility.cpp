@@ -1,6 +1,7 @@
 #include "Utility.h"
 #include <iostream>
-
+#include <algorithm>
+using std::max;
 ///////////////////手工选取图像中的矩形/////////////////////////////////
 
 
@@ -64,8 +65,8 @@ void veWarpAffine(const IplImage* src,
 
 	cvMatMul(map_matrix,&A,&B);
 
-	int dst_w = max(b[0],max(b[1],max(b[2],b[3])));
-	int dst_h = max(b[4],max(b[5],max(b[6],b[7])));
+	int dst_w = std::max(b[0], std::max(b[1], std::max(b[2], b[3])));
+	int dst_h = std::max(b[4], std::max(b[5], std::max(b[6], b[7])));
 
 	if(*dst == NULL)
 		*dst = cvCreateImage(cvSize(dst_w,dst_h),src->depth,src->nChannels);
@@ -97,8 +98,10 @@ void veWarpPerspective(const IplImage* src,
 	
 	cvMatMul(map_matrix,&A,&B);
 	
-	int dst_w = max(b[0]/b[8],max(b[1]/b[9],max(b[2]/b[10],b[3]/b[11])));
-	int dst_h = max(b[4]/b[8],max(b[5]/b[9],max(b[6]/b[10],b[7]/b[11])));
+	int dst_w = std::max(b[0] / b[8], std::max(b[1] / b[9], 
+		std::max(b[2] / b[10], b[3] / b[11])));
+	int dst_h = std::max(b[4] / b[8], std::max(b[5] / b[9], 
+		std::max(b[6] / b[10], b[7] / b[11])));
 	
 	if(*dst == NULL)
 		*dst = cvCreateImage(cvSize(dst_w,dst_h),src->depth,src->nChannels);
@@ -136,7 +139,7 @@ void veWarpPerspective(const IplImage* src,
 		
 	}else
 	{
-		bnd_pts[1].y = max(bnd_pts[0].y, bnd_pts[1].y);
+		bnd_pts[1].y = std::max(bnd_pts[0].y, bnd_pts[1].y);
 
 		if(bnd_pts[1].y>0 && bnd_pts[1].y<(*dst)->height)
 		{
@@ -524,8 +527,8 @@ void veImageFusionProcess(const IplImage* base,
 						   IplImage** dst,
 						   int left_ex)
 {
-	int nw = max(base->width,reg->width);
-	int nh = max(base->height,reg->height);
+	int nw = std::max(base->width, reg->width);
+	int nh = std::max(base->height, reg->height);
 
 	int base_flag = 1, reg_flag = 2, overlap_flag = 3;
 	

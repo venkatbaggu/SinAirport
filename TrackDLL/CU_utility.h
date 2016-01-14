@@ -8,23 +8,9 @@
 #ifndef CU_UTILITY_H_
 #define CU_UTILITY_H_
 
-#include "cudaoptflow.hpp"
-#include "cudawarping.hpp"
-#include "cudaarithm.hpp"
-
-#include <vector>
-#include <string>
-#include <algorithm>
-using std::max;
-using std::string;
-using std::vector;
-
 #include "Utility.h"
 using cv::Point;
 using cv::Size;
-using cv::Mat;
-using cv::Rect;
-using cv::Scalar;
 using cv::Point2f;
 using cv::cuda::GpuMat;
 

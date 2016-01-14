@@ -53,7 +53,7 @@ namespace Sins.Airport.Mat
         private Sins.Data.MySql.SQLHelper mysql = new Sins.Data.MySql.SQLHelper();
 
         //private Action<int,int,byte[]> DetectAction = DoDetectData;
-        private Action<CRect[]> DetectAction = DoDetectData;
+        private Action<CRect[], int> DetectAction = DoDetectData;
         #endregion
 
         #region 构造函数
@@ -97,6 +97,35 @@ namespace Sins.Airport.Mat
             this.ConnectServer();
             //初始化跟踪拼接系统
             this.InitTrackMat();
+
+            CPoint[] rules = new CPoint[5];
+
+            rules[0].X = 22;
+            rules[0].Y = 22;
+            rules[1].X = 100;
+            rules[1].Y = 100;
+            rules[2].X = 1000;
+            rules[2].Y = 100;
+            rules[3].X = 100;
+            rules[3].Y = 1000;
+            rules[4].X = 1000;
+            rules[4].Y = 1000;
+            //rules[0].vertexes = new CPoint[4];
+            //rules[0].vertexes[0].X = 100;
+            //rules[0].vertexes[0].Y = 100;
+            //rules[0].vertexes[1].X = 100;
+            //rules[0].vertexes[1].Y = 1000;
+            //rules[0].vertexes[2].X = 400;
+            //rules[0].vertexes[2].Y = 100;
+            //rules[0].vertexes[3].X = 1000;
+            //rules[0].vertexes[3].Y = 400;
+            //rules[0].size = 4;
+
+            //rules[1].ID = 32;
+            //rules[1].vertexes = new CPoint[4];
+            //rules[1].size = rules[1].vertexes.Length;
+
+            TrackMat.updateInvadeRule(rules, 5);
         }
         #endregion
         #region 初始化点监控图像
@@ -177,10 +206,10 @@ namespace Sins.Airport.Mat
         {
             if (!userName.Contains("detect")) 
                 return;
-            if (dataType == 1 && data != null) 
+            if (data != null) 
             {
                 DetectAction.BeginInvoke(
-                    data, null, new Object[] { data });
+                    data, dataType, null,new Object[] { data });
             }
         }
         /// <summary>
@@ -189,14 +218,14 @@ namespace Sins.Airport.Mat
         /// <param name="dataType"></param>
         /// <param name="size"></param>
         /// <param name="data"></param>
-        private static  void  DoDetectData(CRect[] data)
+        private static  void  DoDetectData(CRect[] data, int cur)
         {
             try
             {
                 //var temp = BinData.GetData<CRect[]>(data);
-                CRect[][] rundata = new CRect[DetecChannel][];
-                //rundata[size - 1] = temp;
-                TrackMat.TrackRun(rundata);
+                //CRect[][] rundata = new CRect[DetecChannel][];
+                //rundata[size - 1] = data;
+                TrackMat.TrackRun(data, data.Length, cur);
             }
             catch
             {
@@ -248,7 +277,7 @@ namespace Sins.Airport.Mat
         {
             for (int i = 0; i < nums;i++ )
             {
-                //CRect rect = results[i];
+                CRect[] temp = BinData.PtrToArray<CRect>(results, nums);
              //   this.mysql.GetCommand("SaveTrackData", new string[] { "ID", "ruleID", "position", "cur", "trajectories" }, new object[] { rect.ID, rect.position, rect.ruleID, rect.cur, rect.trajectories }, true).ExecuteNonQuery();
             }
         }

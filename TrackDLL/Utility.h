@@ -1,14 +1,5 @@
-#if !defined UTILITY_H
+#ifndef UTILITY_H
 #define UTILITY_H
-
-#if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-
-
-#include <algorithm>
-using std::max;
-using std::min;
 
 #include <core/core.hpp>
 #include <core/utility.hpp>

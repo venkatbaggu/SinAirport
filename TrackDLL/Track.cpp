@@ -57,26 +57,40 @@ int __declspec(dllexport) setTrackCallback(TrackCallback ptr) {
 	return 0;
 }
 
-void TrackRun(CRect** objs, int row, int col) {
-	vector<vector<cv::Rect>> vecObjs(row, vector<cv::Rect>(col));
+void TrackRun(CRect* data, int size, int cur) {
+	if (nullptr == data || size < 0)
+		return ;
 
-	for (int r = 0; r < row; ++r) {
-		for (int c = 0; c < col; ++c) {
-			vecObjs[r][c].x = objs[r][c].X;
-			vecObjs[r][c].y = objs[r][c].Y;
-			vecObjs[r][c].width = objs[r][c].Width;
-			vecObjs[r][c].height = objs[r][c].Height;
-		}
+	//vector<vector<cv::Rect>> objs(size);
+
+	//for (int c = 0; c < size; ++c) {
+	//	vecObjs[[c].x = objs[c].X;
+	//	vecObjs[r][c].y = objs[c].Y;
+	//	vecObjs[r][c].width = objs[c].Width;
+	//	vecObjs[r][c].height = objs[c].Height;
+	//}
+
+	//vector<cv::Rect> obj = mergeAll(objs);
+
+	vector<cv::Rect> objs(size);
+	for (int idx = 0; idx < size; ++idx) {
+		objs[idx].x = data[idx].X;
+		objs[idx].y = data[idx].Y;
+		objs[idx].width = data[idx].Width;
+		objs[idx].height = data[idx].Height;
 	}
 
-	vector<cv::Rect> obj = mergeAll(vecObjs);
-
-	TrackingManager::instance()->update(obj);
+	TrackingManager::instance()->update(objs);
 
 	map<RuleInfo, std::set<ID>> alerts;
 	WarningManager::instance()->warning(alerts);
 
-	
+	if (!alerts.empty()) {
+		CRect* test = new CRect[2];
+		test[0].X = 13;
+		test[0].Y = 13;
+		gCallback(test, 2);
+	}
 
 	//int len = results.size();
 	//Result* res = new Result[len];
@@ -95,19 +109,39 @@ void clearRules(void) {
 	return;
 }
 
-int updateInvadeRule(InvadeRule* rules, int size) {
+//int updateInvadeRule(InvadeRule* rules, int size) {
+//	list<unique_ptr<IWarning>> dts;
+//
+//	for (int idx = 0; idx < size; ++idx) {
+//		vector<cv::Point> tmp(rules[idx].size);
+//
+//		for (int i = 0; i < size; ++i) {
+//			tmp[i].x = rules[idx].vertexes[i].x;
+//			tmp[i].y = rules[idx].vertexes[i].y;
+//		}
+//
+//		dts.emplace_back(new Invade(rules[idx].ID, tmp));
+//	}
+//
+//	WarningManager::instance()->reset(dts);
+//	return 0;
+//}
+
+int updateInvadeRule(CPoint* rules, int size) {
+	if (nullptr == rules || size <= 0)
+		return -1;
+
 	list<unique_ptr<IWarning>> dts;
 
-	for (int idx = 0; idx < size; ++idx) {
-		vector<cv::Point> tmp(rules[idx].size);
+	vector<cv::Point> tmp(size - 1);
 
-		for (int i = 0; i < size; ++i) {
-			tmp[i].x = rules[idx].vertexes[i].x;
-			tmp[i].y = rules[idx].vertexes[i].y;
-		}
-
-		dts.emplace_back(new Invade(rules[idx].ID, tmp));
+	for (int i = 1; i < size; ++i) {
+		tmp[i-1].x = rules[i].x;
+		tmp[i-1].y = rules[i].y;
 	}
+
+		
+	dts.emplace_back(new Invade(rules[0].x, tmp));
 
 	WarningManager::instance()->reset(dts);
 	return 0;

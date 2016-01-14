@@ -24,8 +24,10 @@ void Trajectory::append(const cv::Rect& rect)
 */
 const cv::Rect Trajectory::lastRect(void) const
 {
-	assert(false == rects.empty());
-	return rects.back();
+	if (false == rects.empty())
+		return rects.back();
+	else
+		return cv::Rect();
 }
 
 /**

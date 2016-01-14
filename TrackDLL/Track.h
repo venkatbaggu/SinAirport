@@ -36,7 +36,7 @@ extern "C" int __declspec(dllexport)
 * @return void
 */
 extern "C" void __declspec(dllexport) 
-		TrackRun(CRect** objs, int row, int col);
+		TrackRun(CRect* data, int size, int cur);
 
 /*
 * @brief TrackStart
@@ -56,8 +56,11 @@ extern "C" int __declspec(dllexport) TrackStart(void);
 * @return bool
 * 更新成功返回true，不成功返回false。
 */
-extern "C" int __declspec(dllexport) 
-		updateInvadeRule(InvadeRule* rules, int size);
+//extern "C" int __declspec(dllexport) 
+//		updateInvadeRule(InvadeRule* rules, int size);
+
+extern "C" int __declspec(dllexport)
+		updateInvadeRule(CPoint* rules, int size);
 
 /**
 * @brief updateHaltRule

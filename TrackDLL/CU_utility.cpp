@@ -1,7 +1,14 @@
-
 #include "CU_utility.h"
 #include <iostream>
-//#include <windows.h>
+#include <vector>
+#include <algorithm>
+using std::max;
+using std::vector;
+using std::string;
+
+#include <cudaoptflow.hpp>
+#include <cudawarping.hpp>
+#include <cudaarithm.hpp>
 
 ////////////////////////////////////////////////////
 /// 1.将透视变换转成gpu
@@ -68,8 +75,8 @@ void cuWarpAffine(const IplImage* src,
 
 	cvMatMul(map_matrix, &A, &B);
 
-	int dst_w = max(b[0], max(b[1], max(b[2], b[3])));
-	int dst_h = max(b[4], max(b[5], max(b[6], b[7])));
+	int dst_w = std::max(b[0], std::max(b[1], std::max(b[2], b[3])));
+	int dst_h = std::max(b[4], std::max(b[5], std::max(b[6], b[7])));
 
 	if (*dst == NULL)
 		*dst = cvCreateImage(cvSize(dst_w, dst_h), src->depth, src->nChannels);
@@ -95,14 +102,14 @@ cv::Size cuCalcBoundPts(const cv::Mat& src,
 
 	cv::gemm(map_matrix, A, 1, Mat(), 0, B);
 
-	int dst_w = max(B.at<float>(0, 0) / B.at<float>(2, 0),
-		max(B.at<float>(0, 1) / B.at<float>(2, 1),
-		max(B.at<float>(0, 2) / B.at<float>(2, 2),
+	int dst_w = std::max(B.at<float>(0, 0) / B.at<float>(2, 0),
+		std::max(B.at<float>(0, 1) / B.at<float>(2, 1),
+		std::max(B.at<float>(0, 2) / B.at<float>(2, 2),
 		B.at<float>(0, 3) / B.at<float>(2, 3))));
 
-	int dst_h = max(B.at<float>(1, 0) / B.at<float>(2, 0),
-		max(B.at<float>(1, 1) / B.at<float>(2, 1),
-		max(B.at<float>(1, 2) / B.at<float>(2, 2),
+	int dst_h = std::max(B.at<float>(1, 0) / B.at<float>(2, 0),
+		std::max(B.at<float>(1, 1) / B.at<float>(2, 1),
+		std::max(B.at<float>(1, 2) / B.at<float>(2, 2),
 		B.at<float>(1, 3) / B.at<float>(2, 3))));
 
 
@@ -518,8 +525,8 @@ cv::Rect cuCreateWeightsMatrix(const cv::Mat& src_base,
 		cv::cvtColor(src_base, base, CV_RGB2GRAY);
 		cv::cvtColor(src_reg, reg, CV_RGB2GRAY);
 
-		nw = max(base.cols, reg_size.width);
-		nh = max(base.rows, reg_size.height);
+		nw = std::max(base.cols, reg_size.width);
+		nh = std::max(base.rows, reg_size.height);
 
 		baseWeights.setTo(0);
 		regWeights.setTo(0);

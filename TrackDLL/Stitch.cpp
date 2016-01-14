@@ -12,7 +12,34 @@ int Stitch::init(const string& parameters) {
 	return 1;
 }
 
-int cnt = 0;
+void FillBitmapInfo(BITMAPINFO* bmi, int width, int height, int bpp, int origin)
+{
+	assert(bmi && width >= 0 && height >= 0 && 
+		(bpp == 8 || bpp == 24 || bpp == 32));
+
+	BITMAPINFOHEADER* bmih = &(bmi->bmiHeader);
+
+	memset(bmih, 0, sizeof(*bmih));
+	bmih->biSize = sizeof(BITMAPINFOHEADER);
+	bmih->biWidth = width;
+	bmih->biHeight = origin ? abs(height) : -abs(height);
+	bmih->biPlanes = 1;
+	bmih->biBitCount = (unsigned short)bpp;
+	bmih->biCompression = BI_RGB;
+
+	if (bpp == 8)
+	{
+		RGBQUAD* palette = bmi->bmiColors;
+		int i;
+		for (i = 0; i < 256; i++)
+		{
+			palette[i].rgbBlue = palette[i].rgbGreen = palette[i].rgbRed = (BYTE)i;
+			palette[i].rgbReserved = 0;
+		}
+	}
+}
+
+#include <time.h>  
 
 void Stitch::run(void) {
 
@@ -25,10 +52,51 @@ void Stitch::run(void) {
 		stitcher.process3cam(frames[0], frames[1], frames[2]);
 		stitcher.getPanorama(m_cur);
 
+		//show.
+		//cvNamedWindow("stitch", 0);
+		//imshow("stitch", m_cur);
+		//cvWaitKey(1);
+
 		//paint.
-		cvNamedWindow("stitch", 0);
-		imshow("stitch", m_cur);
-		cvWaitKey(1);
+		HWND hWnd = (HWND)gDC;
+
+		if (hWnd == NULL || m_cur.empty())
+			return ;
+
+
+		BITMAPINFO bitmapinfo;
+		FillBitmapInfo(&bitmapinfo, m_cur.cols, m_cur.rows,
+			m_cur.channels() * 8, 0);
+		PAINTSTRUCT ptStr;
+
+		int state = 1;
+		// 开始绘图 
+		HDC hDC = BeginPaint(hWnd, &ptStr);
+		state = StretchDIBits(hDC, 0, 0, m_cur.cols + 14,	\
+					m_cur.rows + 35, 0, 0, m_cur.cols, m_cur.rows,	\
+					m_cur.data, &bitmapinfo, DIB_RGB_COLORS, SRCCOPY);
+
+		SetMapMode(hDC, MM_TEXT);          // 设置映射模式 
+		HPEN hPen = (HPEN)GetStockObject(WHITE_PEN);
+		SelectObject(hDC, hPen);                 // 将画笔选入设备上下文    
+
+		HBRUSH hBrh = (HBRUSH)(GetStockObject(WHITE_BRUSH)); // 深灰色画刷 
+		SelectObject(hDC, hBrh);
+		RoundRect(hDC, 50, 50, 200, 350, 150, 300);      // 圆角矩形 
+
+		// 结束绘图 
+		EndPaint(hWnd, &ptStr);
+
+		RECT rct;
+		rct.left = 0;
+		rct.right = m_cur.cols;
+		rct.top = 0;
+		rct.bottom = m_cur.rows;
+
+		state = ShowWindow(hWnd, SW_SHOW);
+		state = UpdateWindow(hWnd);
+		state = InvalidateRect(hWnd, &rct, 1);
+
 		//std::cout << "stitch" << std::endl;
 
 		/*cv::String str = cv::format("e:/1/%06d.jpg", cnt++);

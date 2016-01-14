@@ -1,6 +1,7 @@
 #include "Data.h"
-#include "Stitch.h"
 #include "CameraManager.h"
+#include "Stitch.h"
+
 
 /**
 * @brief CameraManager::CameraManager
