@@ -58,6 +58,7 @@
             <param name="name">数据包名</param>
             <param name="data">数据</param>
         </member>
+        <!-- 对于成员“T:Sins.Client.ReceieveCRect”忽略有格式错误的 XML 注释 -->
         <member name="T:Sins.Client.EndEvent">
             <summary>
             登录服务器
@@ -133,6 +134,11 @@
             </summary>
         </member>
         <member name="F:Sins.Client.ClientHandle.OnRecvBroadBin">
+            <summary>
+             接收到广播的监测数据
+            </summary>
+        </member>
+        <member name="F:Sins.Client.ClientHandle.OnReceieveCRect">
             <summary>
              接收到广播的监测数据
             </summary>
@@ -252,6 +258,16 @@
             <param name="data">数据</param>
              <returns>发送结果</returns>
         </member>
+        <member name="M:Sins.Client.ClientHandle.SendCRect(System.String,System.Int32,System.Int64,System.String,Sins.Net.CRect[])">
+            <summary>
+            发送CRect数组
+            </summary>
+            <param name="userName">用户名</param>
+            <param name="dataType">数据类型</param>
+            <param name="size">-1：开始创建文件，-2：获取数据，-3：停止接收，-4：停止发送，-5发送完成，大于等于 0：数据大小</param>
+            <param name="note">数据包名</param>
+            <param name="data">CRect数组</param>
+        </member>
         <!-- 对于成员“M:Sins.Client.ClientHandle.BroadcastBin(System.Int32,System.Int64,System.String,System.Byte[])”忽略有格式错误的 XML 注释 -->
         <member name="M:Sins.Client.ClientHandle.EndLogin(System.String[],System.Int32)">
             <summary>
@@ -323,6 +339,16 @@
             <param name="size">-1：开始创建文件，-2：获取数据，-3：停止接收，-4：停止发送，-5发送完成，大于等于 0：数据大小</param>
             <param name="name">数据包名</param>
             <param name="data">数据</param>
+        </member>
+        <member name="M:Sins.Client.ClientHandle.ReceieveCRect(System.String,System.Int32,System.Int64,System.String,Sins.Net.CRect[])">
+            <summary>
+             接收CRect数组
+            </summary>
+            <param name="userName">用户名</param>
+            <param name="dataType">数据类型</param>
+            <param name="size">-1：开始创建文件，-2：获取数据，-3：停止接收，-4：停止发送，-5发送完成，大于等于 0：数据大小</param>
+            <param name="note">数据包名</param>
+            <param name="data">CRect数组</param>
         </member>
         <member name="M:Sins.Client.ClientHandle.GetBump">
             <summary>

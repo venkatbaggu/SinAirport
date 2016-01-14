@@ -95,7 +95,7 @@ namespace Sins.Airport.Mat
             //连接通信服务器
             this.ConnectServer();
             //初始化跟踪拼接系统
-            //this.InitTrackMat();
+            this.InitTrackMat();
         }
         #endregion
         #region 初始化点监控图像
