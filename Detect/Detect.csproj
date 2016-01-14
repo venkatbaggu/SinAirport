@@ -110,6 +110,12 @@
   <ItemGroup>
     <Content Include="CameraSet.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataStruct\DataStruct.csproj">
+      <Project>{4e0789a7-0d29-44a0-b946-66c292aede84}</Project>
+      <Name>DataStruct</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

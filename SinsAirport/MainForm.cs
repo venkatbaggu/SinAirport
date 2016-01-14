@@ -11,6 +11,7 @@ using System.Configuration;
 
 namespace Sins.Airport.Mat
 {
+    using Sins.Net;
     using Sins.Client;
     using Sins.Client.Binary;
     public partial class MainForm : Form
@@ -153,7 +154,7 @@ namespace Sins.Airport.Mat
                 string port=ConfigurationSettings.AppSettings["port"];
                 string user=ConfigurationSettings.AppSettings["user"];
                 this.client = new ClientHandle(user);
-                this.client.OnReceieveBin += this.RecvDetectData;
+                this.client.OnReceieveCRect += this.RecvCRect;
               //  Client.OnRecvBroadBin += this.RecvUpdateRule;
                 this.client.Login();
             }
@@ -172,15 +173,14 @@ namespace Sins.Airport.Mat
         /// <param name="size">数据类型 dataType=1{1...n 检测端编号}  dataType=2{1:入侵检测规则2:停机检测规则3:错误轨迹规则4：轨迹冲突规则}</param>
         /// <param name="note">说明</param>
         /// <param name="data">数据流</param>
-        private void RecvDetectData(string user, int dataType, long size, string note, byte[] data)
+        private void RecvCRect(string userName, int dataType, long size, string note, CRect[] data)
         {
-            if (!user.Contains("detect")) 
+            if (!userName.Contains("detect")) 
                 return;
             if (dataType == 1 && data != null) 
             {
-                CRect[] temp = BinData.GetData<CRect[]>(data);
                 DetectAction.BeginInvoke(
-                    temp, null, new Object[] { temp });
+                    data, null, new Object[] { data });
             }
         }
         /// <summary>

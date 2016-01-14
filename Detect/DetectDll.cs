@@ -7,31 +7,7 @@ using System.Runtime.InteropServices;
 
 namespace Sins.Airport.Detect
 {
-    #region  矩形结构体
-    /// <summary>
-    /// 矩形结构体
-    /// </summary>
-    [Serializable]
-    public struct CRect
-    {
-        /// <summary>
-        /// X坐标
-        /// </summary>
-        public int X;
-        /// <summary>
-        ///   Y坐标
-        /// </summary>
-        public int Y;
-        /// <summary>
-        ///  矩形长
-        /// </summary>
-        public int Width;
-        /// <summary>
-        ///  矩形宽
-        /// </summary>
-        public int Height;
-    }
-    #endregion
+    using Sins.Net;
 
     #region  回调函数
     /// <summary>

@@ -125,6 +125,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataStruct\DataStruct.csproj">
+      <Project>{4e0789a7-0d29-44a0-b946-66c292aede84}</Project>
+      <Name>DataStruct</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Log\Helper.csproj">
       <Project>{a0a78484-8359-4be9-9092-b7d3245acb6a}</Project>
       <Name>Helper</Name>

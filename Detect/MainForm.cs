@@ -4,6 +4,7 @@ using System.Configuration;
 
 namespace Sins.Airport.Detect
 {
+    using Sins.Net;
     using Sins.Client;//通信客户端
     using Sins.Client.Binary;
     public partial class MainForm : Form
@@ -43,8 +44,8 @@ namespace Sins.Airport.Detect
             if (!this.GetSettints()) 
                 return;
             //创建通信客户端
-            this.client = new ClientHandle(user);
-            //this.client = new ClientHandle("");
+            //this.client = new ClientHandle(user);
+            this.client = new ClientHandle("detect");
 
             this.client.OnReceieveBin += this.recv;
 
@@ -141,8 +142,7 @@ namespace Sins.Airport.Detect
                     }
                   
                     //发送数据
-                    this.client.SendBin("tracker", 1, 1, "D", 
-                        BinData.GetBin<CRect[]>(data));
+                    this.client.SendCRect("tracker", 1, 1, "D", data);
                 }));
             } catch {
 
