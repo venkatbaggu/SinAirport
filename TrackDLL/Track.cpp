@@ -85,11 +85,25 @@ void TrackRun(CRect* data, int size, int cur) {
 	map<RuleInfo, std::set<ID>> alerts;
 	WarningManager::instance()->warning(alerts);
 
-	if (!alerts.empty()) {
-		CRect* test = new CRect[2];
-		test[0].X = 13;
-		test[0].Y = 13;
-		gCallback(test, 2);
+	//test code.
+	for (auto alert : alerts){
+		for (auto target : alert.second) {
+			int interval = 0;
+			const auto& rects =
+				TargetManager::instance()->getTrajectory(target).rects;
+
+			CRect* warning = new CRect[rects.size()];
+			for (auto rect : rects) {
+				//(interval++) % gTrajectoryInterval
+				warning[interval].X = rect.x;
+				warning[interval].Y = rect.y;
+				warning[interval].Width = rect.width;
+				warning[interval].Height = rect.height;
+				++interval;
+			}
+			gCallback(warning, rects.size());
+			delete[] warning;
+		}
 	}
 
 	//int len = results.size();

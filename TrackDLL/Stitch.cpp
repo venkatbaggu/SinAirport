@@ -43,6 +43,9 @@ void FillBitmapInfo(BITMAPINFO* bmi, int width, int height, int bpp, int origin)
 
 void Stitch::run(void) {
 
+	//cv::namedWindow("test");
+	//HWND hWnd = (HWND)cvGetWindowHandle("test");
+
 	vector<cv::Mat> frames = Data::instance()->read();
 
 	if (frames[0].empty() || frames[1].empty() ||
@@ -72,15 +75,20 @@ void Stitch::run(void) {
 		int state = 1;
 		// 开始绘图 
 		HDC hDC = BeginPaint(hWnd, &ptStr);
-		state = StretchDIBits(hDC, 0, 0, m_cur.cols + 14,	\
+		//state = StretchDIBits(hDC, 0, 0, m_cur.cols + 14,	\
 					m_cur.rows + 35, 0, 0, m_cur.cols, m_cur.rows,	\
 					m_cur.data, &bitmapinfo, DIB_RGB_COLORS, SRCCOPY);
 
-		SetMapMode(hDC, MM_TEXT);          // 设置映射模式 
+		//SetMapMode(hDC, MM_TEXT);          // 设置映射模式 
 		HPEN hPen = (HPEN)GetStockObject(WHITE_PEN);
-		SelectObject(hDC, hPen);                 // 将画笔选入设备上下文    
+		SelectObject(hDC, hPen);                 // 将画笔选入设备上下文   
 
-		HBRUSH hBrh = (HBRUSH)(GetStockObject(WHITE_BRUSH)); // 深灰色画刷 
+		HFONT font = CreateFont(30, 0, 0, 0, FW_BLACK, FALSE, FALSE, FALSE, GB2312_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FIXED_PITCH | FF_MODERN, L"宋体");
+		SelectObject(hDC, font);   //选入字体 
+		SetBkMode(hDC, TRANSPARENT);
+		TextOut(hDC, 100, 600, L"abc", lstrlen(L"abc"));//输出 
+
+		HBRUSH hBrh = (HBRUSH)(GetStockObject(WHITE_BRUSH));  
 		SelectObject(hDC, hBrh);
 		RoundRect(hDC, 50, 50, 200, 350, 150, 300);      // 圆角矩形 
 
@@ -93,11 +101,15 @@ void Stitch::run(void) {
 		rct.top = 0;
 		rct.bottom = m_cur.rows;
 
-		state = ShowWindow(hWnd, SW_SHOW);
+		/*state = ShowWindow(hWnd, SW_SHOW);
 		state = UpdateWindow(hWnd);
-		state = InvalidateRect(hWnd, &rct, 1);
+		state = InvalidateRect(hWnd, &rct, 1);*/
+		
+		SendMessage(hWnd, WM_SHOWWINDOW, 0, 0);
+		SendMessage(hWnd, WM_SETREDRAW, 0, 0);
+		SendMessage(hWnd, WM_PAINT, 0, 0);
 
-		//std::cout << "stitch" << std::endl;
+		std::cout << "stitch" << std::endl;
 
 		/*cv::String str = cv::format("e:/1/%06d.jpg", cnt++);
 		cv::Mat tmp;

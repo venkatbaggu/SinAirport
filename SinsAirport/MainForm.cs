@@ -278,6 +278,18 @@ namespace Sins.Airport.Mat
             for (int i = 0; i < nums;i++ )
             {
                 CRect[] temp = BinData.PtrToArray<CRect>(results, nums);
+                //test code
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    this.warningInfo.Clear();
+                    int count = 1;
+                    this.warningInfo.AppendText("预警数据:\r\n");
+
+                    foreach (CRect rect in temp)
+                    {
+                        this.warningInfo.AppendText(string.Format("[{0}]：X:{1},Y:{2};Heigth:{3},Width:{4}.\r\n", count++.ToString().PadLeft(2), rect.X.ToString().PadLeft(2), rect.Y.ToString().PadLeft(3), rect.Height.ToString().PadLeft(3), rect.Width.ToString().PadLeft(3)));
+                    }
+                }));
              //   this.mysql.GetCommand("SaveTrackData", new string[] { "ID", "ruleID", "position", "cur", "trajectories" }, new object[] { rect.ID, rect.position, rect.ruleID, rect.cur, rect.trajectories }, true).ExecuteNonQuery();
             }
         }
@@ -306,6 +318,17 @@ namespace Sins.Airport.Mat
             try { this.cameras.CleanUp(); } catch { }
         }
         #endregion
+
+        private void MatVideo_Paint(object sender, PaintEventArgs e)
+        {
+            int i = 0;
+        }
+
+        private void MainForm_Paint(object sender, PaintEventArgs e)
+        {
+            this.MatVideo.Invalidate();
+            int i = 0;
+        }
 
     }
 }

@@ -41,6 +41,7 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.warningInfo = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.MatVideo)).BeginInit();
             this.status_pan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -51,6 +52,7 @@
             // 
             // Close_Btn
             // 
+            this.Close_Btn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Close_Btn.Location = new System.Drawing.Point(266, -1);
             this.Close_Btn.Name = "Close_Btn";
             this.Close_Btn.Size = new System.Drawing.Size(20, 18);
@@ -60,14 +62,17 @@
             // 
             // MatVideo
             // 
+            this.MatVideo.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.MatVideo.Location = new System.Drawing.Point(0, 0);
             this.MatVideo.Name = "MatVideo";
-            this.MatVideo.Size = new System.Drawing.Size(100, 50);
+            this.MatVideo.Size = new System.Drawing.Size(217, 138);
             this.MatVideo.TabIndex = 1;
             this.MatVideo.TabStop = false;
+            this.MatVideo.Paint += new System.Windows.Forms.PaintEventHandler(this.MatVideo_Paint);
             // 
             // Setting_Btn
             // 
+            this.Setting_Btn.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Setting_Btn.Location = new System.Drawing.Point(252, 0);
             this.Setting_Btn.Name = "Setting_Btn";
             this.Setting_Btn.Size = new System.Drawing.Size(20, 18);
@@ -90,6 +95,7 @@
             // pictureBox4
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.Red;
+            this.pictureBox4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBox4.Location = new System.Drawing.Point(54, 4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(16, 16);
@@ -99,6 +105,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Red;
+            this.pictureBox3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBox3.Location = new System.Drawing.Point(37, 4);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(16, 16);
@@ -108,6 +115,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Red;
+            this.pictureBox2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBox2.Location = new System.Drawing.Point(20, 4);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(16, 16);
@@ -117,11 +125,20 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Red;
+            this.pictureBox1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.pictureBox1.Location = new System.Drawing.Point(3, 4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(16, 16);
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
+            // 
+            // warningInfo
+            // 
+            this.warningInfo.Location = new System.Drawing.Point(196, 281);
+            this.warningInfo.Name = "warningInfo";
+            this.warningInfo.Size = new System.Drawing.Size(243, 96);
+            this.warningInfo.TabIndex = 5;
+            this.warningInfo.Text = "";
             // 
             // MainForm
             // 
@@ -129,6 +146,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.ClientSize = new System.Drawing.Size(965, 502);
+            this.Controls.Add(this.warningInfo);
             this.Controls.Add(this.status_pan);
             this.Controls.Add(this.Setting_Btn);
             this.Controls.Add(this.MatVideo);
@@ -139,6 +157,7 @@
             this.Text = "机场拼接预警系统";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.MatVideo)).EndInit();
             this.status_pan.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -152,7 +171,6 @@
         #endregion
 
         private System.Windows.Forms.Button Close_Btn;
-        private System.Windows.Forms.PictureBox MatVideo;
         private System.Windows.Forms.Button Setting_Btn;
         private System.Windows.Forms.Timer detect1;
         private System.Windows.Forms.Timer detect2;
@@ -163,6 +181,9 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
+        //test code
+        private System.Windows.Forms.RichTextBox warningInfo;
+        private System.Windows.Forms.PictureBox MatVideo;
     }
 }
 
